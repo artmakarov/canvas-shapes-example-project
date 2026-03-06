@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Shapes - Extended Buttons Example</title>
+    <link rel="stylesheet" href="./styles/main.css?v=1">
+    <link rel="stylesheet" href="./styles/extended.css?v=1">
+</head>
+
+<body>
+<div class="demo-info">
+    <h3>Демонстрация гибкой системы кнопок</h3>
+
+    <p>
+        Этот пример показывает, как легко добавлять новые кнопки
+        без изменения основных классов CanvasUIManager и CanvasApp.
+    </p>
+
+    <p><strong>Новые кнопки:</strong></p>
+
+    <ul>
+        <li><strong>Randomize</strong> - перемешивает фигуры</li>
+        <li><strong>Reset</strong> - сбрасывает все фигуры</li>
+        <li><strong>Info</strong> - показывает статистику</li>
+    </ul>
+</div>
+
+<div class="toolbar">
+    <!-- Кнопки будут созданы динамически -->
+</div>
+
+<div id="canvasWrapper" class="canvas-wrapper">
+    <canvas id="canvas"></canvas>
+
+    <div id="info" class="info">
+        Кликните Add для создания фигур. Кликните на фигуру для выбора.
+    </div>
+</div>
+
+<script type="module">
+  import { CanvasAppExtended } from './js/app/canvas-extended.app.js?v=1';
+  import { RectangleFactory } from './js/factories/rectangle.factory.js?v=1';
+  import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=1';
+  import { CanvasShapeManagerExtended } from './js/managers/canvas-shape-extended.manager.js?v=1';
+  import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=1';
+
+  window.addEventListener('load', () => {
+    new CanvasAppExtended({
+      shapeFactory: new RectangleFactory(),
+      connectionFactory: new ArrowConnectionFactory(),
+      shapeManager: new CanvasShapeManagerExtended(), // Используем расширенный менеджер фигур
+      renderer: new Canvas2DRenderer(
+        document.getElementById('canvasWrapper'),
+        document.getElementById('canvas'),
+      ),
+    });
+  });
+</script>
+</body>
+</html>
