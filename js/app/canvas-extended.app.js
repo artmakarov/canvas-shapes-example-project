@@ -83,7 +83,10 @@ export class CanvasAppExtended extends CanvasApp {
 
   /** @return {void} */
   _resetCanvas() {
-    this._shapeManager.resetShapes();
+    this._shapeManager.resetShapes({
+      canvasWidth: this._renderer.canvas.width,
+      canvasHeight: this._renderer.canvas.height,
+    });
     this._render();
     this._updateUI();
   }

@@ -40,6 +40,7 @@
 
 <script type="module">
   import { CanvasAppExtended } from './js/app/canvas-extended.app.js?v=1';
+  import { ContrastColorPalette } from './js/models/contrast-color-palette.model.js?v=1';
   import { RectangleFactory } from './js/factories/rectangle.factory.js?v=1';
   import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=1';
   import { CanvasShapeManagerExtended } from './js/managers/canvas-shape-extended.manager.js?v=1';
@@ -47,7 +48,7 @@
 
   window.addEventListener('load', () => {
     new CanvasAppExtended({
-      shapeFactory: new RectangleFactory(),
+      shapeFactory: new RectangleFactory(new ContrastColorPalette()),
       connectionFactory: new ArrowConnectionFactory(),
       shapeManager: new CanvasShapeManagerExtended(), // Используем расширенный менеджер фигур
       renderer: new Canvas2DRenderer(

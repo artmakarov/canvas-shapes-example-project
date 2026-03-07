@@ -26,6 +26,7 @@
 
 <script type="module">
   import { CanvasApp } from './js/app/canvas.app.js?v=1';
+  import { ColorPalette } from './js/models/color-palette.model.js?v=1';
   import { RectangleFactory } from './js/factories/rectangle.factory.js?v=1';
   import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=1';
   import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=1';
@@ -39,7 +40,7 @@
   window.addEventListener('load', () => {
     new CanvasApp({
       buttonManager,
-      shapeFactory: new RectangleFactory(),
+      shapeFactory: new RectangleFactory(new ColorPalette()),
       connectionFactory: new ArrowConnectionFactory(),
       connectionGenerator: new SmartConnectionGenerator(),
       shapeManager: new CanvasShapeManager(),

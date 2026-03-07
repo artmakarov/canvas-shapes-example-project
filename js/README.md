@@ -35,10 +35,15 @@
 
 ### models/
 - `arrow-connection.model.js` - Модель стрелочного соединения
+- `color-palette.model.js` - Модель цветовой палитры
+- `contrast-color-palette.model.js` - Модель контрастной цветовой палитры
 - `rectangle.model.js` - Модель прямоугольника
 
 ### renderers/
 - `canvas-2d.renderer.js` - Рендерер для 2D Canvas
+
+### utils/
+- `index.js` - Централизованный экспорт всех утилит
 
 ## Использование
 
