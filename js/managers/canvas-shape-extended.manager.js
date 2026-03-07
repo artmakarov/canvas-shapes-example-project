@@ -1,5 +1,6 @@
 import { CanvasShapeManager } from './canvas-shape.manager.js';
 import { RectangleFactory } from '../factories/rectangle.factory.js';
+import { ColorPalette } from '../models/color-palette.model.js';
 
 /**
  * Расширенная реализация менеджера фигур с дополнительными функциями
@@ -22,16 +23,22 @@ export class CanvasShapeManagerExtended extends CanvasShapeManager {
 
   /**
    * Сбрасывает все фигуры в начальное состояние
+   * @param {{ canvasWidth: number; canvasHeight: number }} input
    * @return {void}
    */
-  resetShapes() {
-    const rectangleFactory = new RectangleFactory()
+  resetShapes(input) {
+    const { canvasWidth, canvasHeight } = input;
+    const rectangleFactory = new RectangleFactory(new ColorPalette());
 
     this.clear();
 
     // Создаем 3 начальные фигуры
     for (let i = 1; i <= 3; i++) {
-      const shape = rectangleFactory.createShape(i);
+      const shape = rectangleFactory.createShape({
+        id: i,
+        canvasWidth,
+        canvasHeight,
+      });
 
       this.addShape(shape);
     }

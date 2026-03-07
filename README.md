@@ -13,47 +13,50 @@
 
 ```
 canvas-shapes-example-project/
-├── js/                                       # JavaScript модули
-│   ├── app/                                  # Главные классы приложения
-│   │   ├── canvas.app.js                     # Основное приложение
-│   │   ├── canvas-base.app.js                # Базовый класс приложения
-│   │   └── canvas-extended.app.js            # Расширенное приложение
-│   ├── factories/                            # Фабрики для создания объектов
-│   │   ├── rectangle.factory.js              # Фабрика прямоугольников
-│   │   └── arrow-connection.factory.js       # Фабрика стрелочных соединений
-│   ├── generators/                           # Генераторы
-│   │   └── smart-connection.generator.js     # Генератор соединений
-│   ├── interfaces/                           # Интерфейсы и типы
-│   │   ├── shape.js                          # Интерфейс фигуры
-│   │   ├── connection.js                     # Интерфейс соединения
-│   │   ├── renderer.interface.js             # Интерфейс рендерера
-│   │   ├── shape.manager.js                  # Интерфейс менеджера фигур
-│   │   ├── shape-factory.interface.js        # Интерфейс фабрики фигур
-│   │   ├── connection-factory.interface.js   # Интерфейс фабрики соединений
-│   │   ├── connection-generator.interface.js # Интерфейс генератора соединений
-│   │   ├── button-manager.interface.js       # Интерфейс менеджера кнопок
-│   │   └── ui-manager.interface.js           # Интерфейс менеджера UI
-│   ├── managers/                             # Менеджеры компонентов
-│   │   ├── canvas-shape.manager.js           # Менеджер фигур
-│   │   ├── canvas-shape-extended.manager.js  # Расширенный менеджер фигур
-│   │   ├── canvas-button.manager.js          # Менеджер кнопок
-│   │   └── canvas-ui.manager.js              # Менеджер пользовательского интерфейса
-│   ├── models/                               # Модели данных
-│   │   ├── rectangle.model.js                # Модель прямоугольника
-│   │   └── arrow-connection.model.js         # Модель стрелочного соединения
-│   ├── renderers/                            # Рендереры
-│   │   └── canvas-2d.renderer.js             # 2D Canvas рендерер
-│   └── README.md                             # Документация по JavaScript файлам
-├── styles/                                   # CSS стили
-│   ├── main.css                              # Основные стили
-│   ├── extended.css                          # Дополнительные стили
-│   └── README.md                             # Документация по стилям
-├── .editorconfig                             # Конфигурация редактора
-├── .gitignore                                # Файлы для игнорирования в Git
-├── index.html                                # Основное приложение с базовыми функциями
-├── example-extended-buttons.html             # Расширенный пример с дополнительными функциями
-├── LICENSE                                   # Лицензия
-└── README.md                                 # Этот файл
+├── js/                                             # JavaScript модули
+│   ├── app/                                        # Главные классы приложения
+│   │   ├── canvas.app.js                           # Основное приложение
+│   │   ├── canvas-base.app.js                      # Базовый класс приложения
+│   │   └── canvas-extended.app.js                  # Расширенное приложение
+│   ├── factories/                                  # Фабрики для создания объектов
+│   │   ├── arrow-connection.factory.js             # Фабрика стрелочных соединений
+│   │   └── rectangle.factory.js                    # Фабрика прямоугольников
+│   ├── generators/                                 # Генераторы
+│   │   └── smart-connection.generator.js           # Генератор соединений
+│   ├── interfaces/                                 # Интерфейсы и типы
+│   │   ├── button-manager.interface.js             # Интерфейс менеджера кнопок
+│   │   ├── connection.interface.js                 # Интерфейс соединения
+│   │   ├── connection-factory.interface.js         # Интерфейс фабрики соединений
+│   │   ├── connection-generator.interface.js       # Интерфейс генератора соединений
+│   │   ├── renderer.interface.js                   # Интерфейс рендерера
+│   │   ├── shape.interface.js                      # Интерфейс фигуры
+│   │   ├── shape-factory.interface.js              # Интерфейс фабрики фигур
+│   │   ├── shape-manager.interface.js              # Интерфейс менеджера фигур
+│   │   └── ui-manager.interface.js                 # Интерфейс менеджера UI
+│   ├── managers/                                   # Менеджеры компонентов
+│   │   ├── canvas-button.manager.js                # Менеджер кнопок
+│   │   ├── canvas-shape.manager.js                 # Менеджер фигур
+│   │   ├── canvas-shape-extended.manager.js        # Расширенный менеджер фигур
+│   │   └── canvas-ui.manager.js                    # Менеджер пользовательского интерфейса
+│   ├── models/                                     # Модели данных
+│   │   ├── arrow-connection.model.js               # Модель стрелочного соединения
+│   │   ├── color-palette.model.js                  # Цветовая палитра
+│   │   ├── contrast-color-palette.model.js         # Контрастная цветовая палитра
+│   │   └── rectangle.model.js                      # Модель фигуры прямоугольника
+│   ├── renderers/                                  # Рендереры
+│   │   └── canvas-2d.renderer.js                   # 2D Canvas рендерер
+│   └── utils/                                      # Утилиты
+│       └── index.js                                # Централизованный экспорт всех утилит
+├── styles/                                         # CSS стили
+│   ├── main.css                                    # Основные стили
+│   ├── extended.css                                # Дополнительные стили
+│   └── README.md                                   # Документация по стилям
+├── .editorconfig                                   # Конфигурация редактора
+├── .gitignore                                      # Файлы для игнорирования в Git
+├── index.html                                      # Основное приложение с базовыми функциями
+├── example-extended-buttons.html                   # Расширенный пример с дополнительными функциями
+├── LICENSE                                         # Лицензия
+└── README.md                                       # Этот файл
 ```
 
 ## Ключевые технологии
@@ -90,29 +93,38 @@ canvas-shapes-example-project/
 ## Основные компоненты
 
 ### Приложение (app/)
-- `CanvasApp` - основное приложение с базовыми функциями
 - `CanvasAppBase` - базовый класс для расширения
+- `CanvasApp` - основное приложение с базовыми функциями
 - `CanvasAppExtended` - расширенная версия с дополнительными функциями
 
+### Интерфейсы (interfaces/)
+- `Shape` - базовый интерфейс для всех фигур
+- `ShapeFactory` - интерфейс фабрики фигур
+- `ShapeManager` - интерфейс менеджера фигур
+- `Connection` - базовый интерфейс для соединений
+- `ConnectionFactory` - интерфейс фабрики соединений
+- `ConnectionGenerator` - интерфейс генератора соединений
+- `ButtonManager` - интерфейс менеджера кнопок
+- `UIManager` - интерфейс менеджера UI
+- `Renderer` - интерфейс рендерера
+
 ### Фигуры и модели (models/)
-- `Shape` (интерфейс) - базовый класс для всех фигур
 - `Rectangle` - реализация прямоугольника
-- `Connection` (интерфейс) - базовый класс для соединений
 - `ArrowConnection` - стрелочные соединения между фигурами
+- `ColorPalette` - цветовая палитра
+- `ContrastColorPalette` - контрастная цветовая палитра
 
 ### Фабрики (factories/)
-- `ShapeFactory` - создание фигур
-- `ConnectionFactory` - создание соединений
-- Централизованное управление созданием объектов
+- `RectangleFactory` - создание прямоугольников
+- `ArrowConnectionFactory` - создание стрелочных соединений
 
 ### Менеджеры (managers/)
-- `ShapeManager` - жизненный цикл фигур
-- `ShapeManagerExtended` - расширенный менеджер с дополнительными функциями
-- `ButtonManager` - управление UI кнопками
-- `UIManager` - обновление состояния интерфейса
+- `CanvasShapeManager` - жизненный цикл фигур
+- `CanvasShapeManagerExtended` - расширенный менеджер с дополнительными функциями
+- `CanvasButtonManager` - управление UI кнопками
+- `CanvasUIManager` - обновление состояния интерфейса
 
 ### Рендеринг (renderers/)
-- `CanvasRenderer` (интерфейс) - базовый класс для рендерера
 - `Canvas2DRenderer` - конкретная реализация с 2D Canvas API
 
 ### Генераторы (generators/)
@@ -120,10 +132,9 @@ canvas-shapes-example-project/
 - Выбор оптимальных сторон для подключения
 - Минимизация длины линий
 
-### Интерфейсы (interfaces/)
-- Полный набор TypeScript-подобных интерфейсов
-- Обеспечивают типобезопасность и документацию
-- Легко расширяемая система типов
+### Утилиты (utils/)
+- `randomValueOnAxis` - генерация случайных координат
+- `index.js` - Централизованный экспорт всех утилитных функций
 
 ## Функциональность
 

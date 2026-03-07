@@ -1,4 +1,4 @@
-import { ShapeManager } from '../interfaces/shape.manager.js';
+import { ShapeManager } from '../interfaces/shape-manager.interface.js';
 
 /** Реализация менеджера фигур */
 export class CanvasShapeManager extends ShapeManager {
