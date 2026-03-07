@@ -13,29 +13,31 @@ import { Shape } from '../interfaces/shape.js';
  */
 
 export class Rectangle extends Shape {
-  /** @param properties {RectangleProperties} */
+  static colorSelected = '#FFD700'
+  static lineWidthBase = 1
+  static lineWidthSelected = 3
+
+  /** @param {RectangleProperties} properties */
   constructor(properties) {
-    const { id, name, x, y, width, height, color } = properties;
-
-    super({ id, name, x, y, color });
+    super(properties);
 
     /**
      * @type {number}
      * @protected
      */
-    this._width = width;
+    this._width = properties.width;
 
     /**
      * @type {number}
      * @protected
      */
-    this._height = height;
+    this._height = properties.height;
   }
 
   draw(ctx) {
     // Рамка
-    ctx.strokeStyle = this.selected ? '#FFD700' : this.color;
-    ctx.lineWidth = this.selected ? 3 : 1;
+    ctx.strokeStyle = this.selected ? Rectangle.colorSelected : this.color;
+    ctx.lineWidth = this.selected ? Rectangle.lineWidthSelected : Rectangle.lineWidthBase;
     ctx.strokeRect(this.x, this.y, this._width, this._height);
 
     // Текст

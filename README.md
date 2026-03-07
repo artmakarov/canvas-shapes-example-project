@@ -39,11 +39,14 @@ canvas-shapes-example-project/
 │   │   ├── canvas-button.manager.js          # Менеджер кнопок
 │   │   └── canvas-ui.manager.js              # Менеджер пользовательского интерфейса
 │   ├── models/                               # Модели данных
-│   │   ├── rectangle.model.js                # Модель прямоугольника
-│   │   └── arrow-connection.model.js         # Модель стрелочного соединения
+│   │   ├── arrow-connection.model.js         # Модель стрелочного соединения
+│   │   ├── color-palette.model.js            # Цветовая палитра
+│   │   ├── contrast-color-palette.model.js   # Контрастная цветовая палитра
+│   │   └── rectangle.model.js                # Модель фигуры прямоугольника
 │   ├── renderers/                            # Рендереры
 │   │   └── canvas-2d.renderer.js             # 2D Canvas рендерер
-│   └── README.md                             # Документация по JavaScript файлам
+│   └── utils/                                # Утилиты
+│       └── index.js                          # Централизованный экспорт всех утилит
 ├── styles/                                   # CSS стили
 │   ├── main.css                              # Основные стили
 │   ├── extended.css                          # Дополнительные стили
@@ -124,6 +127,10 @@ canvas-shapes-example-project/
 - Полный набор TypeScript-подобных интерфейсов
 - Обеспечивают типобезопасность и документацию
 - Легко расширяемая система типов
+
+### Утилиты (utils/)
+- Набор вспомогательных самостоятельных функций
+- `index.js` - Централизованный экспорт всех утилитных функций
 
 ## Функциональность
 

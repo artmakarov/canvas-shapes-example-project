@@ -1,33 +1,54 @@
 import { ShapeFactory } from '../interfaces/shape-factory.interface.js';
 import { Rectangle } from '../models/rectangle.model.js';
+import { randomValueOnAxis } from '../utils/index.js';
 
 /**
  * Фабрика для создания прямоугольников
  */
 export class RectangleFactory extends ShapeFactory {
   /**
-   * @param {number} id
-   * @return {Rectangle}
+   * @param {ColorPalette} colorPalette
    */
-  createShape(id) {
+  constructor(colorPalette) {
+    super();
+
+    /**
+     * @type {ColorPalette}
+     * @protected
+     */
+    this._colorPalette = colorPalette;
+
+    /**
+     * @type {number}
+     * @protected
+     */
+    this._shapeWidth = 140;
+
+    /**
+     * @type {number}
+     * @protected
+     */
+    this._shapeHeight = 40;
+
+    /**
+     * Расстояние от краёв холста
+     * @type {number}
+     * @protected
+     */
+    this._padding = 100;
+  }
+
+  createShape(input) {
+    const { id, canvasWidth, canvasHeight } = input;
+
     return new Rectangle({
       id,
       name: `Shape${id}`,
-      x: Math.random() * 600 + 100,
-      y: Math.random() * 400 + 50,
-      width: 140,
-      height: 40,
-      color: RectangleFactory.GetRandomColor(),
+      x: randomValueOnAxis(canvasWidth, this._shapeWidth, this._padding),
+      y: randomValueOnAxis(canvasHeight, this._shapeHeight, this._padding),
+      width: this._shapeWidth,
+      height: this._shapeHeight,
+      color: this._colorPalette.getRandomColor(),
     });
-  }
-
-  /** @return {string} */
-  static GetRandomColor() {
-    const colors = [
-      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57',
-      '#FF9FF3', '#54A0FF', '#5F27CD', '#00D2D3', '#FF9F43',
-    ];
-
-    return colors[Math.floor(Math.random() * colors.length)];
   }
 }
