@@ -80,7 +80,11 @@ export class CanvasApp extends CanvasAppBase {
 
   /** @return {void} */
   _addShape() {
-    const shape = this._shapeFactory.createShape(this._shapeManager.nextShapeId);
+    const shape = this._shapeFactory.createShape({
+      id: this._shapeManager.nextShapeId,
+      canvasWidth: this._renderer.canvas.width,
+      canvasHeight: this._renderer.canvas.height,
+    });
 
     this._shapeManager.addShape(shape);
     this._render();

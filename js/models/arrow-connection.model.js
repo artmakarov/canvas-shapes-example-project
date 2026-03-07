@@ -1,4 +1,4 @@
-import { Connection } from '../interfaces/connection.js';
+import { Connection } from '../interfaces/connection.interface.js';
 
 export class ArrowConnection extends Connection {
   draw(ctx) {

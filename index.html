@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas Shapes</title>
-    <link rel="stylesheet" href="./styles/main.css?v=1">
+    <link rel="stylesheet" href="./styles/main.css?v=0.1.0">
 </head>
 
 <body>
@@ -25,21 +25,22 @@
 </div>
 
 <script type="module">
-  import { CanvasApp } from './js/app/canvas.app.js?v=1';
-  import { RectangleFactory } from './js/factories/rectangle.factory.js?v=1';
-  import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=1';
-  import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=1';
-  import { CanvasShapeManager } from './js/managers/canvas-shape.manager.js?v=1';
-  import { CanvasButtonManager } from './js/managers/canvas-button.manager.js?v=1';
-  import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=1';
-  import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=1';
+  import { CanvasApp } from './js/app/canvas.app.js?v=0.1.0';
+  import { ColorPalette } from './js/models/color-palette.model.js?v=0.1.0';
+  import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.1.0';
+  import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.1.0';
+  import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=0.1.0';
+  import { CanvasShapeManager } from './js/managers/canvas-shape.manager.js?v=0.1.0';
+  import { CanvasButtonManager } from './js/managers/canvas-button.manager.js?v=0.1.0';
+  import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.1.0';
+  import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.1.0';
 
   const buttonManager = new CanvasButtonManager();
 
   window.addEventListener('load', () => {
     new CanvasApp({
       buttonManager,
-      shapeFactory: new RectangleFactory(),
+      shapeFactory: new RectangleFactory(new ColorPalette()),
       connectionFactory: new ArrowConnectionFactory(),
       connectionGenerator: new SmartConnectionGenerator(),
       shapeManager: new CanvasShapeManager(),

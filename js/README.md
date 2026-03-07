@@ -18,27 +18,32 @@
 
 ### interfaces/
 - `button-manager.interface.js` - Интерфейс для управления кнопками
+- `connection.interface.js` - Интерфейс соединения
 - `connection-factory.interface.js` - Интерфейс фабрики соединений
 - `connection-generator.interface.js` - Интерфейс генератора соединений
-- `connection.js` - Интерфейс соединения
 - `renderer.interface.js` - Интерфейс рендерера
+- `shape.interface.js` - Интерфейс фигуры
 - `shape-factory.interface.js` - Интерфейс фабрики фигур
-- `shape.js` - Интерфейс фигуры
-- `shape.manager.js` - Интерфейс менеджера фигур
+- `shape-manager.interface.js` - Интерфейс менеджера фигур
 - `ui-manager.interface.js` - Интерфейс менеджера UI
 
 ### managers/
 - `canvas-button.manager.js` - Менеджер кнопок на холсте
+- `canvas-shape.manager.js` - Менеджер фигур
 - `canvas-shape-extended.manager.js` - Менеджер фигур для расширенного приложения
-- `canvas-shape.manager.js` - Базовый менеджер фигур
 - `canvas-ui.manager.js` - Менеджер UI элементов холста
 
 ### models/
 - `arrow-connection.model.js` - Модель стрелочного соединения
+- `color-palette.model.js` - Модель цветовой палитры
+- `contrast-color-palette.model.js` - Модель контрастной цветовой палитры
 - `rectangle.model.js` - Модель прямоугольника
 
 ### renderers/
 - `canvas-2d.renderer.js` - Рендерер для 2D Canvas
+
+### utils/
+- `index.js` - Централизованный экспорт всех утилит
 
 ## Использование
 
