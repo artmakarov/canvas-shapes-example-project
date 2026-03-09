@@ -2,7 +2,20 @@
  * Интерфейс для рендеринга
  * @interface
  */
-export class Renderer {
+export class CanvasRenderer {
+  /** @param {HTMLCanvasElement} canvas */
+  constructor(canvas) {
+    this.canvas = canvas;
+  }
+
+  /**
+   * @abstract
+   * @return {void}
+   */
+  resize() {
+    throw new Error('Метод resize должен быть реализован подклассом!');
+  }
+
   /**
    * @abstract
    * @param {Shape[]} shapes

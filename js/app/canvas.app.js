@@ -7,9 +7,9 @@ import { CanvasAppBase } from './canvas-base.app.js';
  * @property {ConnectionFactory} connectionFactory
  * @property {ConnectionGenerator} connectionGenerator
  * @property {ShapeManager} shapeManager
- * @property {ButtonManager} [buttonManager]
- * @property {UIManager} [uiManager]
- * @property {Renderer} renderer
+ * @property {ButtonManager} buttonManager
+ * @property {UIManager} uiManager
+ * @property {CanvasRenderer} renderer
  */
 
 /**
@@ -19,40 +19,31 @@ export class CanvasApp extends CanvasAppBase {
   /** @param {CanvasAppConfig} config */
   constructor(config) {
     super(config);
+  }
 
-    this._setupButtons();
-    this._setupEventListeners();
-    this._render();
-    this._updateUI();
+  /**
+   * @param {ButtonConfig[]|((self: this) => ButtonConfig[])} buttonConfigs
+   * @return {this}
+   */
+  setButtons(buttonConfigs) {
+    const buttons = typeof buttonConfigs === 'function' ? buttonConfigs(this) : buttonConfigs;
+
+    this._buttonManager.setButtons(buttons);
+    this._updateUI()
+
+    return this
   }
 
   /** @return {void} */
-  _setupButtons() {
-    /** @type {ButtonConfig[]} */
-    const buttonConfigs = [
-      {
-        id: 'addBtn',
-        text: 'Add',
-        className: 'button_success',
-        action: () => this._addShape(),
-      },
-      {
-        id: 'deleteBtn',
-        text: 'Delete',
-        className: 'button_danger',
-        isDisabled: (shapeCount, selectedShape) => !selectedShape,
-        action: () => this._deleteSelectedShape(),
-      },
-      {
-        id: 'clearBtn',
-        text: 'Clear',
-        className: 'button_secondary',
-        isDisabled: (shapeCount) => !shapeCount,
-        action: () => this._clearCanvas(),
-      },
-    ];
+  update() {
+    this._render()
+    this._updateUI()
+  }
 
-    this._buttonManager.setButtons(buttonConfigs);
+  /** @return {void} */
+  run() {
+    this._setupEventListeners();
+    this.update();
   }
 
   /** @return {void} */
@@ -67,8 +58,7 @@ export class CanvasApp extends CanvasAppBase {
 
       this._shapeManager.selectedShape = this._shapeManager.getShapeAtPoint(coordinate);
 
-      this._render();
-      this._updateUI();
+      this.update();
     });
 
     // Подстройка под размер окна
@@ -76,37 +66,5 @@ export class CanvasApp extends CanvasAppBase {
       this._renderer.resize();
       this._render();
     });
-  }
-
-  /** @return {void} */
-  _addShape() {
-    const shape = this._shapeFactory.createShape({
-      id: this._shapeManager.nextShapeId,
-      canvasWidth: this._renderer.canvas.width,
-      canvasHeight: this._renderer.canvas.height,
-    });
-
-    this._shapeManager.addShape(shape);
-    this._render();
-    this._updateUI();
-  }
-
-  /** @return {void} */
-  _deleteSelectedShape() {
-    const selectedShape = this._shapeManager.selectedShape;
-
-    if (selectedShape) {
-      this._shapeManager.removeShape(selectedShape);
-      this._shapeManager.selectedShape = null;
-      this._render();
-      this._updateUI();
-    }
-  }
-
-  /** @return {void} */
-  _clearCanvas() {
-    this._shapeManager.clear();
-    this._render();
-    this._updateUI();
   }
 }

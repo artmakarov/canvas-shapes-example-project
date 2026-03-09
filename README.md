@@ -16,8 +16,7 @@ canvas-shapes-example-project/
 ├── js/                                             # JavaScript модули
 │   ├── app/                                        # Главные классы приложения
 │   │   ├── canvas.app.js                           # Основное приложение
-│   │   ├── canvas-base.app.js                      # Базовый класс приложения
-│   │   └── canvas-extended.app.js                  # Расширенное приложение
+│   │   └── canvas-base.app.js                      # Базовый класс приложения
 │   ├── factories/                                  # Фабрики для создания объектов
 │   │   ├── arrow-connection.factory.js             # Фабрика стрелочных соединений
 │   │   └── rectangle.factory.js                    # Фабрика прямоугольников
@@ -25,10 +24,10 @@ canvas-shapes-example-project/
 │   │   └── smart-connection.generator.js           # Генератор соединений
 │   ├── interfaces/                                 # Интерфейсы и типы
 │   │   ├── button-manager.interface.js             # Интерфейс менеджера кнопок
+│   │   ├── canvas-renderer.interface.js            # Интерфейс рендерера
 │   │   ├── connection.interface.js                 # Интерфейс соединения
 │   │   ├── connection-factory.interface.js         # Интерфейс фабрики соединений
 │   │   ├── connection-generator.interface.js       # Интерфейс генератора соединений
-│   │   ├── renderer.interface.js                   # Интерфейс рендерера
 │   │   ├── shape.interface.js                      # Интерфейс фигуры
 │   │   ├── shape-factory.interface.js              # Интерфейс фабрики фигур
 │   │   ├── shape-manager.interface.js              # Интерфейс менеджера фигур

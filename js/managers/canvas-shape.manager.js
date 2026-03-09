@@ -35,10 +35,7 @@ export class CanvasShapeManager extends ShapeManager {
     return this._selectedShape;
   }
 
-  /**
-   * @param {Shape|null} shape
-   * @return {void}
-   */
+  /** @param {Shape|null} shape */
   set selectedShape(shape) {
     if (this._selectedShape) {
       this._selectedShape.unselect();
