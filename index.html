@@ -35,22 +35,70 @@
   import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.1.0';
   import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.1.0';
 
+  const shapeFactory = new RectangleFactory(new ColorPalette());
+  const shapeManager = new CanvasShapeManager();
+  const connectionFactory = new ArrowConnectionFactory();
+  const connectionGenerator = new SmartConnectionGenerator();
   const buttonManager = new CanvasButtonManager();
-
-  window.addEventListener('load', () => {
-    new CanvasApp({
-      buttonManager,
-      shapeFactory: new RectangleFactory(new ColorPalette()),
-      connectionFactory: new ArrowConnectionFactory(),
-      connectionGenerator: new SmartConnectionGenerator(),
-      shapeManager: new CanvasShapeManager(),
-      uiManager: new CanvasUIManager(buttonManager),
-      renderer: new Canvas2DRenderer(
-        document.getElementById('canvasWrapper'),
-        document.getElementById('canvas'),
-      ),
-    });
+  const uiManager = new CanvasUIManager(buttonManager);
+  const renderer = new Canvas2DRenderer(
+    document.getElementById('canvasWrapper'),
+    document.getElementById('canvas'),
+  );
+  const application = new CanvasApp({
+    shapeFactory,
+    shapeManager,
+    connectionFactory,
+    connectionGenerator,
+    buttonManager,
+    uiManager,
+    renderer,
   });
+
+  application.setButtons((app) => /** @type ButtonConfig[] */ [
+    {
+      id: 'addBtn',
+      text: 'Add',
+      className: 'button_success',
+      action: () => {
+        const shape = shapeFactory.createShape({
+          id: shapeManager.nextShapeId,
+          canvasWidth: renderer.canvas.width,
+          canvasHeight: renderer.canvas.height,
+        });
+
+        shapeManager.addShape(shape);
+        app.update();
+      },
+    },
+    {
+      id: 'deleteBtn',
+      text: 'Delete',
+      className: 'button_danger',
+      isDisabled: (shapeCount, selectedShape) => !selectedShape,
+      action: () => {
+        const { selectedShape } = shapeManager;
+
+        if (!selectedShape) return;
+
+        shapeManager.selectedShape = null;
+        shapeManager.removeShape(selectedShape);
+        app.update();
+      },
+    },
+    {
+      id: 'clearBtn',
+      text: 'Clear',
+      className: 'button_secondary',
+      isDisabled: (shapeCount) => !shapeCount,
+      action: () => {
+        shapeManager.clear();
+        app.update();
+      },
+    },
+  ]);
+
+  window.addEventListener('load', () => application.run());
 </script>
 </body>
 </html>

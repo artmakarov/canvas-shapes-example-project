@@ -7,7 +7,6 @@
 ### app/
 - `canvas.app.js` - Основное приложение для базового функционала
 - `canvas-base.app.js` - Базовое приложение с минимальным функционалом
-- `canvas-extended.app.js` - Расширенное приложение с дополнительными возможностями
 
 ### factories/
 - `arrow-connection.factory.js` - Фабрика для создания стрелочных соединений
@@ -18,10 +17,10 @@
 
 ### interfaces/
 - `button-manager.interface.js` - Интерфейс для управления кнопками
+- `canvas-renderer.interface.js` - Интерфейс рендерера
 - `connection.interface.js` - Интерфейс соединения
 - `connection-factory.interface.js` - Интерфейс фабрики соединений
 - `connection-generator.interface.js` - Интерфейс генератора соединений
-- `renderer.interface.js` - Интерфейс рендерера
 - `shape.interface.js` - Интерфейс фигуры
 - `shape-factory.interface.js` - Интерфейс фабрики фигур
 - `shape-manager.interface.js` - Интерфейс менеджера фигур

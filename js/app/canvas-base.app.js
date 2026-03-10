@@ -1,22 +1,13 @@
-import { ArrowConnectionFactory } from '../factories/arrow-connection.factory.js';
-import { Canvas2DRenderer } from '../renderers/canvas-2d.renderer.js';
-import { CanvasButtonManager } from '../managers/canvas-button.manager.js';
-import { CanvasShapeManager } from '../managers/canvas-shape.manager.js';
-import { CanvasUIManager } from '../managers/canvas-ui.manager.js';
-import { RectangleFactory } from '../factories/rectangle.factory.js';
-import { ColorPalette } from '../models/color-palette.model.js';
-import { SmartConnectionGenerator } from '../generators/smart-connection.generator.js';
-
 /**
  * Модель конфигурации для класса {@link CanvasAppBase}
  * @typedef {Object} CanvasAppBaseConfig
- * @property {ShapeFactory} [shapeFactory]
- * @property {ConnectionFactory} [connectionFactory]
- * @property {ConnectionGenerator} [connectionGenerator]
- * @property {ShapeManager} [shapeManager]
- * @property {ButtonManager} [buttonManager]
- * @property {UIManager} [uiManager]
- * @property {Renderer} [renderer]
+ * @property {ShapeFactory} shapeFactory
+ * @property {ConnectionFactory} connectionFactory
+ * @property {ConnectionGenerator} connectionGenerator
+ * @property {ShapeManager} shapeManager
+ * @property {ButtonManager} buttonManager
+ * @property {UIManager} uiManager
+ * @property {CanvasRenderer} renderer
  */
 
 /**
@@ -25,16 +16,48 @@ import { SmartConnectionGenerator } from '../generators/smart-connection.generat
 export class CanvasAppBase {
   /** @param {CanvasAppBaseConfig} config */
   constructor(config) {
-    this._shapeFactory = config.shapeFactory || new RectangleFactory(new ColorPalette());
-    this._connectionFactory = config.connectionFactory || new ArrowConnectionFactory();
-    this._connectionGenerator = config.connectionGenerator || new SmartConnectionGenerator();
-    this._shapeManager = config.shapeManager || new CanvasShapeManager();
-    this._buttonManager = config.buttonManager || new CanvasButtonManager();
-    this._uiManager = config.uiManager || new CanvasUIManager(this._buttonManager);
-    this._renderer = config.renderer || new Canvas2DRenderer(
-      document.getElementById('canvasWrapper'),
-      document.getElementById('canvas'),
-    );
+    /**
+     * @type {ShapeFactory}
+     * @protected
+     */
+    this._shapeFactory = config.shapeFactory;
+
+    /**
+     * @type {ConnectionFactory}
+     * @protected
+     */
+    this._connectionFactory = config.connectionFactory;
+
+    /**
+     *
+     * @type {ConnectionGenerator}
+     * @protected
+     */
+    this._connectionGenerator = config.connectionGenerator;
+
+    /**
+     * @type {ShapeManager}
+     * @protected
+     */
+    this._shapeManager = config.shapeManager;
+
+    /**
+     * @type {ButtonManager}
+     * @protected
+     */
+    this._buttonManager = config.buttonManager;
+
+    /**
+     * @type {UIManager}
+     * @protected
+     */
+    this._uiManager = config.uiManager;
+
+    /**
+     * @type {CanvasRenderer}
+     * @protected
+     */
+    this._renderer = config.renderer;
   }
 
   /** @return {void} */
