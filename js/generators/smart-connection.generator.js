@@ -10,52 +10,34 @@ export class SmartConnectionGenerator extends ConnectionGenerator {
    * @return {Connection[]}
    */
   generateConnections(shapes, connectionFactory) {
+    /** @type {Connection[]} */
     const connections = [];
+    /** @type {Set<string>} */
     const usedEdges = new Set();
 
-    for (let i = 1; i < shapes.length; i++) {
+    for (let i = 1, l = shapes.length; i < l; i+=1) {
       const fromShape = shapes[i - 1];
       const toShape = shapes[i];
+      const bestConnection = this._findBestConnection(fromShape, toShape, usedEdges);
 
-      const fromEdges = ['right', 'bottom', 'left', 'top'];
-      const toEdges = ['left', 'top', 'right', 'bottom'];
+      if (!bestConnection) continue;
 
-      let minDist = Infinity;
-      let bestConnection = null;
+      usedEdges.add(this._getEdgeKey(fromShape.id, bestConnection.fromEdge));
+      usedEdges.add(this._getEdgeKey(toShape.id, bestConnection.toEdge));
 
-      for (const fromEdge of fromEdges) {
-        if (this._isEdgeUsed(fromShape.id, fromEdge, usedEdges)) continue;
-
-        for (const toEdge of toEdges) {
-          if (this._isEdgeUsed(toShape.id, toEdge, usedEdges)) continue;
-
-          const fromPoint = fromShape.getEdgePoint(fromEdge);
-          const toPoint = toShape.getEdgePoint(toEdge);
-          const dist = Math.hypot(fromPoint.x - toPoint.x, fromPoint.y - toPoint.y);
-
-          if (dist < minDist) {
-            minDist = dist;
-            bestConnection = connectionFactory.createConnection({
-              startX: fromPoint.x,
-              startY: fromPoint.y,
-              endX: toPoint.x,
-              endY: toPoint.y,
-              fromEdge,
-              toEdge,
-            });
-          }
-        }
-      }
-
-      if (bestConnection) {
-        usedEdges.add(this._getEdgeKey(fromShape.id, bestConnection.fromEdge));
-        usedEdges.add(this._getEdgeKey(toShape.id, bestConnection.toEdge));
-
-        connections.push(bestConnection);
-      }
+      connections.push(connectionFactory.createConnection(bestConnection));
     }
 
     return connections;
+  }
+
+  /**
+   * @param {number} shapeId
+   * @param {Edge} edge
+   * @return {string}
+   */
+  _getEdgeKey(shapeId, edge) {
+    return `${shapeId}_${edge}`;
   }
 
   /**
@@ -69,11 +51,59 @@ export class SmartConnectionGenerator extends ConnectionGenerator {
   }
 
   /**
-   * @param {number} shapeId
-   * @param {Edge} edge
-   * @return {string}
+   * @param fromShape {Shape}
+   * @param toShape {Shape}
+   * @param usedEdges {Set<string>}
+   * @return {ConnectionProperties|null}
    */
-  _getEdgeKey(shapeId, edge) {
-    return `${shapeId}_${edge}`;
+  _findBestConnection(fromShape, toShape, usedEdges) {
+    /**
+     * Порядок точек на фигуре для предпочтительного исходящего и входящего соединения
+     * @type {{from: Edge[], to: Edge[]}}
+     */
+    const edgesPriority = {
+      from: [
+        'right', 'right-top', 'right-bottom', 'bottom', 'bottom-right', 'bottom-left',
+        'left', 'left-top', 'left-bottom', 'top', 'top-right', 'top-left'
+      ],
+      to: [
+        'left', 'left-bottom', 'left-top', 'top', 'top-left', 'top-right',
+        'right', 'right-bottom', 'right-top', 'bottom', 'bottom-left', 'bottom-right'
+      ],
+    };
+
+    /** @type {number} */
+    let minDist = Infinity;
+    /** @type {ConnectionProperties|null} */
+    let bestConnection = null;
+
+    for (const fromEdge of edgesPriority.from) {
+      if (this._isEdgeUsed(fromShape.id, fromEdge, usedEdges)) continue;
+
+      for (const toEdge of edgesPriority.to) {
+        if (this._isEdgeUsed(toShape.id, toEdge, usedEdges)) continue;
+
+        const fromPoint = fromShape.getEdgePoint(fromEdge);
+        const toPoint = toShape.getEdgePoint(toEdge);
+
+        if (!fromPoint || !toPoint) continue;
+
+        const dist = Math.hypot(fromPoint.x - toPoint.x, fromPoint.y - toPoint.y);
+
+        if (dist < minDist) {
+          minDist = dist;
+          bestConnection = {
+            fromEdge,
+            toEdge,
+            startX: fromPoint.x,
+            startY: fromPoint.y,
+            endX: toPoint.x,
+            endY: toPoint.y,
+          };
+        }
+      }
+    }
+
+    return bestConnection;
   }
 }

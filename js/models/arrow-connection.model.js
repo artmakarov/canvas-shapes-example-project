@@ -1,8 +1,10 @@
 import { Connection } from '../interfaces/connection.interface.js';
 
 export class ArrowConnection extends Connection {
+  static color = '#777'
+
   draw(ctx) {
-    ctx.strokeStyle = '#777';
+    ctx.strokeStyle = ArrowConnection.color;
     ctx.lineWidth = 1;
 
     // Линия
@@ -22,7 +24,7 @@ export class ArrowConnection extends Connection {
     ctx.lineTo(-arrowSize, -arrowSize / 2);
     ctx.lineTo(-arrowSize, arrowSize / 2);
     ctx.closePath();
-    ctx.fillStyle = '#777';
+    ctx.fillStyle = ArrowConnection.color;
     ctx.fill();
     ctx.restore();
   }

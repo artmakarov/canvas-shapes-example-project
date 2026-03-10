@@ -13,9 +13,9 @@ import { Shape } from '../interfaces/shape.interface.js';
  */
 
 export class Rectangle extends Shape {
-  static colorSelected = '#FFD700'
-  static lineWidthBase = 1
-  static lineWidthSelected = 3
+  static colorSelected = '#FFD700';
+  static lineWidthBase = 1;
+  static lineWidthSelected = 3;
 
   /** @param {RectangleProperties} properties */
   constructor(properties) {
@@ -65,7 +65,7 @@ export class Rectangle extends Shape {
 
   /**
    * @param {Edge} edge
-   * @return {Coordinate}
+   * @return {Coordinate|null}
    */
   getEdgePoint(edge) {
     /** @type {{left: number, right: number, top: number, bottom: number}} */
@@ -96,11 +96,13 @@ export class Rectangle extends Shape {
         };
 
       case 'bottom':
-      default:
         return {
           x: rect.left + this._width * 0.5,
           y: rect.bottom,
         };
+
+      default:
+        return null;
     }
   }
 }
