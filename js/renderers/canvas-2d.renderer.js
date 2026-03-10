@@ -1,18 +1,17 @@
-import { Renderer } from '../interfaces/renderer.interface.js';
+import { CanvasRenderer } from '../interfaces/canvas-renderer.interface.js';
 
 /**
  * Реализация рендерера холста
  */
-export class Canvas2DRenderer extends Renderer {
+export class Canvas2DRenderer extends CanvasRenderer {
   /**
    * @param {HTMLElement} canvasWrapper
    * @param {HTMLCanvasElement} canvas
    */
   constructor(canvasWrapper, canvas) {
-    super();
+    super(canvas);
 
     this.canvasWrapper = canvasWrapper;
-    this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
 
     this.resize();

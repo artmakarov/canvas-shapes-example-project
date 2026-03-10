@@ -3,8 +3,11 @@
  */
 
 /**
- * Сторона фигуры для входящего/исходящего соединения
- * @typedef {'left'|'right'|'top'|'bottom'} Edge
+ * Положение точки на фигуре для входящего/исходящего соединения
+ * @typedef {
+ * |'left'|'left-bottom'|'left-top'|'top'|'top-left'|'top-right'
+ * |'right'|'right-bottom'|'right-top'|'bottom'|'bottom-left'|'bottom-right'
+ * } Edge
  */
 
 /**
@@ -110,7 +113,7 @@ export class Shape {
   /**
    * @abstract
    * @param {Edge} edge
-   * @return {Coordinate}
+   * @return {Coordinate|null}
    */
   getEdgePoint(edge) {
     throw new Error('Метод getEdgePoint должен быть реализован подклассом!');

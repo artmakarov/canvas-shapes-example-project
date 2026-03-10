@@ -5,6 +5,30 @@
 export class ShapeManager {
   /**
    * @abstract
+   * @type {number}
+   */
+  get nextShapeId() {
+    throw new Error('Метод `get nextShapeId` должен быть реализован подклассом!');
+  }
+
+  /**
+   * @abstract
+   * @return {Shape|null}
+   */
+  get selectedShape() {
+    throw new Error('Метод `get selectedShape` должен быть реализован подклассом!');
+  }
+
+  /**
+   * @abstract
+   * @param {Shape|null} shape
+   */
+  set selectedShape(shape) {
+    throw new Error('Метод `set selectedShape` должен быть реализован подклассом!');
+  }
+
+  /**
+   * @abstract
    * @param {Shape} shape
    * @return {void}
    */

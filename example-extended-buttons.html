@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas Shapes - Extended Buttons Example</title>
-    <link rel="stylesheet" href="./styles/main.css?v=0.1.0">
-    <link rel="stylesheet" href="./styles/extended.css?v=0.1.0">
+    <link rel="stylesheet" href="./styles/main.css?v=0.2.0">
+    <link rel="stylesheet" href="./styles/extended.css?v=0.2.0">
 </head>
 
 <body>
@@ -39,24 +39,119 @@
 </div>
 
 <script type="module">
-  import { CanvasAppExtended } from './js/app/canvas-extended.app.js?v=0.1.0';
-  import { ContrastColorPalette } from './js/models/contrast-color-palette.model.js?v=0.1.0';
-  import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.1.0';
-  import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.1.0';
-  import { CanvasShapeManagerExtended } from './js/managers/canvas-shape-extended.manager.js?v=0.1.0';
-  import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.1.0';
+  import { CanvasApp } from './js/app/canvas.app.js?v=0.2.0';
+  import { ContrastColorPalette } from './js/models/contrast-color-palette.model.js?v=0.2.0';
+  import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.2.0';
+  import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.2.0';
+  import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=0.2.0';
+  import { CanvasShapeManagerExtended } from './js/managers/canvas-shape-extended.manager.js?v=0.2.0';
+  import { CanvasButtonManager } from './js/managers/canvas-button.manager.js?v=0.2.0';
+  import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.2.0';
+  import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.2.0';
 
-  window.addEventListener('load', () => {
-    new CanvasAppExtended({
-      shapeFactory: new RectangleFactory(new ContrastColorPalette()),
-      connectionFactory: new ArrowConnectionFactory(),
-      shapeManager: new CanvasShapeManagerExtended(), // Используем расширенный менеджер фигур
-      renderer: new Canvas2DRenderer(
-        document.getElementById('canvasWrapper'),
-        document.getElementById('canvas'),
-      ),
-    });
+  const shapeFactory = new RectangleFactory(new ContrastColorPalette());
+  const shapeManager = new CanvasShapeManagerExtended();
+  const connectionFactory = new ArrowConnectionFactory();
+  const connectionGenerator = new SmartConnectionGenerator();
+  const buttonManager = new CanvasButtonManager();
+  const uiManager = new CanvasUIManager(buttonManager);
+  const renderer = new Canvas2DRenderer(
+    document.getElementById('canvasWrapper'),
+    document.getElementById('canvas'),
+  );
+  const application = new CanvasApp({
+    shapeFactory,
+    shapeManager,
+    connectionFactory,
+    connectionGenerator,
+    buttonManager,
+    uiManager,
+    renderer,
   });
+
+  application.setButtons((app) => /** @type ButtonConfig[] */ [
+    {
+      id: 'addBtn',
+      text: 'Add',
+      className: 'button_success',
+      action: () => {
+        const shape = shapeFactory.createShape({
+          id: shapeManager.nextShapeId,
+          canvasWidth: renderer.canvas.width,
+          canvasHeight: renderer.canvas.height,
+        });
+
+        shapeManager.addShape(shape);
+        app.update();
+      },
+    },
+    {
+      id: 'deleteBtn',
+      text: 'Delete',
+      className: 'button_danger',
+      isDisabled: (shapeCount, selectedShape) => !selectedShape,
+      action: () => {
+        const { selectedShape } = shapeManager;
+
+        if (!selectedShape) return;
+
+        shapeManager.selectedShape = null;
+        shapeManager.removeShape(selectedShape);
+        app.update();
+      },
+    },
+    {
+      id: 'clearBtn',
+      text: 'Clear',
+      className: 'button_secondary',
+      isDisabled: (shapeCount) => !shapeCount,
+      action: () => {
+        shapeManager.clear();
+        app.update();
+      },
+    },
+
+    // Новые кнопки
+    {
+      id: 'randomizeBtn',
+      text: 'Randomize',
+      className: 'button_warning',
+      isDisabled: (shapeCount) => !shapeCount,
+      action: () => {
+        shapeManager.randomizeShapes(renderer.canvasWrapper);
+        app.update()
+      },
+    },
+    {
+      id: 'resetBtn',
+      text: 'Reset',
+      className: 'button_secondary',
+      action: () => {
+        shapeManager.resetShapes({
+          canvasWidth: renderer.canvas.width,
+          canvasHeight: renderer.canvas.height,
+        });
+        app.update()
+      },
+    },
+    {
+      id: 'infoBtn',
+      text: 'Info',
+      className: 'button_secondary',
+      action: () => {
+        const shapes = shapeManager.getAllShapes();
+        const selectedShape = shapeManager.selectedShape;
+
+        let infoText = `Статистика:\n`;
+        infoText += `Всего фигур: ${shapes.length}\n`;
+        infoText += `Выбрано: ${selectedShape?.name ?? 'Нет'}`;
+
+        alert(infoText);
+      }
+    },
+  ]);
+
+  window.addEventListener('load', () => application.run());
 </script>
 </body>
 </html>

@@ -16,8 +16,7 @@ canvas-shapes-example-project/
 ├── js/                                             # JavaScript модули
 │   ├── app/                                        # Главные классы приложения
 │   │   ├── canvas.app.js                           # Основное приложение
-│   │   ├── canvas-base.app.js                      # Базовый класс приложения
-│   │   └── canvas-extended.app.js                  # Расширенное приложение
+│   │   └── canvas-base.app.js                      # Базовый класс приложения
 │   ├── factories/                                  # Фабрики для создания объектов
 │   │   ├── arrow-connection.factory.js             # Фабрика стрелочных соединений
 │   │   └── rectangle.factory.js                    # Фабрика прямоугольников
@@ -25,10 +24,10 @@ canvas-shapes-example-project/
 │   │   └── smart-connection.generator.js           # Генератор соединений
 │   ├── interfaces/                                 # Интерфейсы и типы
 │   │   ├── button-manager.interface.js             # Интерфейс менеджера кнопок
+│   │   ├── canvas-renderer.interface.js            # Интерфейс рендерера
 │   │   ├── connection.interface.js                 # Интерфейс соединения
 │   │   ├── connection-factory.interface.js         # Интерфейс фабрики соединений
 │   │   ├── connection-generator.interface.js       # Интерфейс генератора соединений
-│   │   ├── renderer.interface.js                   # Интерфейс рендерера
 │   │   ├── shape.interface.js                      # Интерфейс фигуры
 │   │   ├── shape-factory.interface.js              # Интерфейс фабрики фигур
 │   │   ├── shape-manager.interface.js              # Интерфейс менеджера фигур
@@ -94,8 +93,7 @@ canvas-shapes-example-project/
 
 ### Приложение (app/)
 - `CanvasAppBase` - базовый класс для расширения
-- `CanvasApp` - основное приложение с базовыми функциями
-- `CanvasAppExtended` - расширенная версия с дополнительными функциями
+- `CanvasApp` - основное приложение
 
 ### Интерфейсы (interfaces/)
 - `Shape` - базовый интерфейс для всех фигур
@@ -106,7 +104,7 @@ canvas-shapes-example-project/
 - `ConnectionGenerator` - интерфейс генератора соединений
 - `ButtonManager` - интерфейс менеджера кнопок
 - `UIManager` - интерфейс менеджера UI
-- `Renderer` - интерфейс рендерера
+- `CanvasRenderer` - интерфейс рендерера
 
 ### Фигуры и модели (models/)
 - `Rectangle` - реализация прямоугольника
