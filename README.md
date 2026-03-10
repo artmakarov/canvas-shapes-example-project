@@ -93,8 +93,7 @@ canvas-shapes-example-project/
 
 ### Приложение (app/)
 - `CanvasAppBase` - базовый класс для расширения
-- `CanvasApp` - основное приложение с базовыми функциями
-- `CanvasAppExtended` - расширенная версия с дополнительными функциями
+- `CanvasApp` - основное приложение
 
 ### Интерфейсы (interfaces/)
 - `Shape` - базовый интерфейс для всех фигур
@@ -105,7 +104,7 @@ canvas-shapes-example-project/
 - `ConnectionGenerator` - интерфейс генератора соединений
 - `ButtonManager` - интерфейс менеджера кнопок
 - `UIManager` - интерфейс менеджера UI
-- `Renderer` - интерфейс рендерера
+- `CanvasRenderer` - интерфейс рендерера
 
 ### Фигуры и модели (models/)
 - `Rectangle` - реализация прямоугольника
