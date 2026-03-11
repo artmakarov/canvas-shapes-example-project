@@ -13,7 +13,11 @@ import { Shape } from '../interfaces/shape.interface.js';
  */
 
 export class Rectangle extends Shape {
+  /** @type {string|CanvasGradient|CanvasPattern} */
+  static backgroundStyle = 'rgba(255, 255, 255, 0.8)'
+  /** @type {string|CanvasGradient|CanvasPattern} */
   static colorSelected = '#FFD700';
+
   static lineWidthBase = 1;
   static lineWidthSelected = 3;
 
@@ -35,6 +39,10 @@ export class Rectangle extends Shape {
   }
 
   draw(ctx) {
+    // Заливка
+    ctx.fillStyle = Rectangle.backgroundStyle;
+    ctx.fillRect(this.x, this.y, this._width, this._height);
+
     // Рамка
     ctx.strokeStyle = this.selected ? Rectangle.colorSelected : this.color;
     ctx.lineWidth = this.selected ? Rectangle.lineWidthSelected : Rectangle.lineWidthBase;
