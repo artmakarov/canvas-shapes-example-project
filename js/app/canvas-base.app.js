@@ -1,7 +1,8 @@
+import { PluginManager } from '../managers/plugin.manager.js';
+
 /**
  * Модель конфигурации для класса {@link CanvasAppBase}
  * @typedef {Object} CanvasAppBaseConfig
- * @property {ShapeFactory} shapeFactory
  * @property {ConnectionFactory} connectionFactory
  * @property {ConnectionGenerator} connectionGenerator
  * @property {ShapeManager} shapeManager
@@ -16,12 +17,6 @@
 export class CanvasAppBase {
   /** @param {CanvasAppBaseConfig} config */
   constructor(config) {
-    /**
-     * @type {ShapeFactory}
-     * @protected
-     */
-    this._shapeFactory = config.shapeFactory;
-
     /**
      * @type {ConnectionFactory}
      * @protected
@@ -58,21 +53,118 @@ export class CanvasAppBase {
      * @protected
      */
     this._renderer = config.renderer;
+
+    /**
+     * @type {PluginManager}
+     * @protected
+     */
+    this._pluginManager = new PluginManager(this);
+  }
+
+
+  /** @return {ShapeManager} */
+  get shapeManager() {
+    return this._shapeManager;
+  }
+
+  /** @return {UIManager} */
+  get uiManager() {
+    return this._uiManager;
+  }
+
+  /** @return {CanvasRenderer} */
+  get renderer() {
+    return this._renderer;
   }
 
   /** @return {void} */
-  _updateUI() {
+  render() {
+    const shapes = this._shapeManager.getAllShapes();
+    const connections = this._connectionGenerator.generateConnections(shapes, this._connectionFactory);
+
+    this._renderer.render(shapes, connections);
+  }
+
+  /** @return {void} */
+  updateUI() {
     const shapes = this._shapeManager.getAllShapes();
     const selectedShape = this._shapeManager.selectedShape;
 
     this._uiManager.update(shapes.length, selectedShape);
   }
 
-  /** @return {void} */
-  _render() {
-    const shapes = this._shapeManager.getAllShapes();
-    const connections = this._connectionGenerator.generateConnections(shapes, this._connectionFactory);
+  /** @param {ConnectionFactory} connectionFactory */
+  setConnectionFactory(connectionFactory) {
+    this._connectionFactory = connectionFactory;
+  }
 
-    this._renderer.render(shapes, connections);
+  /** @param {ConnectionGenerator} connectionGenerator */
+  setConnectionGenerator(connectionGenerator) {
+    this._connectionGenerator = connectionGenerator;
+  }
+
+  /** @param {ShapeManager} shapeManager */
+  setShapeManager(shapeManager) {
+    this._shapeManager = shapeManager;
+  }
+
+  /** @param {ButtonManager} buttonManager */
+  setButtonManager(buttonManager) {
+    this._buttonManager = buttonManager;
+  }
+
+  /** @param {CanvasRenderer} renderer */
+  setRenderer(renderer) {
+    this._renderer = renderer;
+  }
+
+  /**
+   * @param {ButtonConfig[]|((self: this) => ButtonConfig[])} buttonConfigs
+   * @return {this}
+   */
+  setButtons(buttonConfigs) {
+    const buttons = typeof buttonConfigs === 'function' ? buttonConfigs(this) : buttonConfigs;
+
+    this._buttonManager.setButtons(buttons);
+    this.updateUI();
+
+    return this;
+  }
+
+  /**
+   * @param {string} name
+   * @return {Plugin|null}
+   */
+  getPlugin(name) {
+    return this._pluginManager.getPlugin(name);
+  }
+
+  /** @return {Plugin[]} */
+  getActivePlugins() {
+    return this._pluginManager.getActivePlugins();
+  }
+
+  /**
+   * @param {Plugin[]} plugins
+   * @return {this}
+   */
+  registerPlugins(plugins) {
+    plugins.forEach((plugin) => this._pluginManager.register(plugin));
+    return this;
+  }
+
+  /**
+   * @param {string[]} names
+   * @return {this}
+   */
+  unregisterPlugins(names) {
+    names.forEach((name) => this._pluginManager.unregister(name));
+    return this;
+  }
+
+  /** @return {this} */
+  destroyAllPlugins() {
+    this._pluginManager.destroyAll();
+    return this;
   }
 }

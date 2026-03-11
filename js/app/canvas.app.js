@@ -1,9 +1,10 @@
 import { CanvasAppBase } from './canvas-base.app.js';
+import { DefaultResizePlugin } from '../plugins/default-resize.plugin.js';
+import { DefaultSelectionPlugin } from '../plugins/default-selection.plugin.js';
 
 /**
  * Модель конфигурации для класса {@link CanvasApp}
  * @typedef {Object} CanvasAppConfig
- * @property {ShapeFactory} shapeFactory
  * @property {ConnectionFactory} connectionFactory
  * @property {ConnectionGenerator} connectionGenerator
  * @property {ShapeManager} shapeManager
@@ -19,52 +20,24 @@ export class CanvasApp extends CanvasAppBase {
   /** @param {CanvasAppConfig} config */
   constructor(config) {
     super(config);
-  }
 
-  /**
-   * @param {ButtonConfig[]|((self: this) => ButtonConfig[])} buttonConfigs
-   * @return {this}
-   */
-  setButtons(buttonConfigs) {
-    const buttons = typeof buttonConfigs === 'function' ? buttonConfigs(this) : buttonConfigs;
-
-    this._buttonManager.setButtons(buttons);
-    this._updateUI()
-
-    return this
-  }
-
-  /** @return {void} */
-  update() {
-    this._render()
-    this._updateUI()
+    this._registerDefaultPlugins()
   }
 
   /** @return {void} */
   run() {
-    this._setupEventListeners();
-    this.update();
+    this.render();
+    this.updateUI();
   }
 
-  /** @return {void} */
-  _setupEventListeners() {
-    // Выбор фигуры
-    this._renderer.canvas.addEventListener('click', (e) => {
-      const rect = this._renderer.canvas.getBoundingClientRect();
-      const coordinate = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-
-      this._shapeManager.selectedShape = this._shapeManager.getShapeAtPoint(coordinate);
-
-      this.update();
-    });
-
-    // Подстройка под размер окна
-    window.addEventListener('resize', () => {
-      this._renderer.resize();
-      this._render();
-    });
+  /**
+   * @return {void}
+   * @protected
+   */
+  _registerDefaultPlugins() {
+    this.registerPlugins([
+      new DefaultResizePlugin(),
+      new DefaultSelectionPlugin(),
+    ])
   }
 }
