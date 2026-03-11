@@ -81,7 +81,25 @@ export class CanvasShapeManager extends ShapeManager {
    * @return {Shape|null}
    */
   getShapeAtPoint(coordinate) {
-    return this._shapes.find((shape) => shape.containsPoint(coordinate)) || null;
+    /** @type {Shape|null} */
+    let shapeAtPoint = null
+
+    /*
+     Находим фигуру с наибольшим индексом в массиве.
+     Почему применяется `for`?
+     Потому что самый быстрый.
+     ...но стоит сравнить/перепроверить с другими алгоритмами!
+     */
+    for (let i = this._shapes.length - 1; i >= 0 ; i-=1) {
+      const shape = this._shapes[i];
+
+      if (shape.containsPoint(coordinate)) {
+        shapeAtPoint = shape;
+        break;
+      }
+    }
+
+    return shapeAtPoint
   }
 
   /** @return {Shape[]} */
