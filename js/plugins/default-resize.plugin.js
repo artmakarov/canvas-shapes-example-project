@@ -1,0 +1,26 @@
+import { Plugin } from '../models/plugin.model.js';
+
+/**
+ * Плагин подстройки размера холста под размер окна
+ */
+export class DefaultResizePlugin extends Plugin {
+  resizeHandler = () => {
+    this.app.renderer.resize();
+    this.app.render();
+  }
+
+  /** @return {string} */
+  getName() {
+    return 'default-resize';
+  }
+
+  /** @return {void} */
+  onInit() {
+    window.addEventListener('resize', this.resizeHandler);
+  }
+
+  /** @return {void} */
+  onDestroy() {
+    window.removeEventListener('resize', this.resizeHandler)
+  }
+}

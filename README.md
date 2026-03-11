@@ -23,6 +23,7 @@ canvas-shapes-example-project/
 │   ├── generators/                                 # Генераторы
 │   │   └── smart-connection.generator.js           # Генератор соединений
 │   ├── interfaces/                                 # Интерфейсы и типы
+│   │   ├── base-plugin.interface.js                # Интерфейс плагина приложения
 │   │   ├── button-manager.interface.js             # Интерфейс менеджера кнопок
 │   │   ├── canvas-renderer.interface.js            # Интерфейс рендерера
 │   │   ├── connection.interface.js                 # Интерфейс соединения
@@ -35,13 +36,19 @@ canvas-shapes-example-project/
 │   ├── managers/                                   # Менеджеры компонентов
 │   │   ├── canvas-button.manager.js                # Менеджер кнопок
 │   │   ├── canvas-shape.manager.js                 # Менеджер фигур
-│   │   ├── canvas-shape-extended.manager.js        # Расширенный менеджер фигур
-│   │   └── canvas-ui.manager.js                    # Менеджер пользовательского интерфейса
+│   │   ├── canvas-shape-extended.manager.js        # Расширенный менеджер фигур с дополнительными функциями
+│   │   ├── canvas-ui.manager.js                    # Менеджер пользовательского интерфейса
+│   │   └── plugin.manager.js                       # Менеджер плагинов
 │   ├── models/                                     # Модели данных
 │   │   ├── arrow-connection.model.js               # Модель стрелочного соединения
 │   │   ├── color-palette.model.js                  # Цветовая палитра
 │   │   ├── contrast-color-palette.model.js         # Контрастная цветовая палитра
+│   │   ├── plugin.model.js                         # Базовый класс для реализации плагинов
 │   │   └── rectangle.model.js                      # Модель фигуры прямоугольника
+│   ├── plugins/                                    # Плагины для приложения
+│   │   ├── default-resize.plugin.js                # Плагин подстройки размера холста под размер окна
+│   │   ├── default-selection.plugin.js             # Плагин выбора одной фигуры
+│   │   └── README.md                               # Документация по плагинам
 │   ├── renderers/                                  # Рендереры
 │   │   └── canvas-2d.renderer.js                   # 2D Canvas рендерер
 │   └── utils/                                      # Утилиты
@@ -89,6 +96,12 @@ canvas-shapes-example-project/
 - Разные генераторы соединений (`SmartConnectionGenerator`)
 - Разные рендереры (`Canvas2DRenderer`)
 
+### 5. Паттерн Плагин
+- Расширение функциональности без изменения основного кода
+- Автоматическая регистрация и инициализация плагинов
+- Возможность перехвата событий мыши и клавиатуры
+- Поддержка расширения рендеринга через плагины
+
 ## Основные компоненты
 
 ### Приложение (app/)
@@ -105,12 +118,14 @@ canvas-shapes-example-project/
 - `ButtonManager` - интерфейс менеджера кнопок
 - `UIManager` - интерфейс менеджера UI
 - `CanvasRenderer` - интерфейс рендерера
+- `BasePlugin` - интерфейс плагина приложения
 
 ### Фигуры и модели (models/)
-- `Rectangle` - реализация прямоугольника
 - `ArrowConnection` - стрелочные соединения между фигурами
 - `ColorPalette` - цветовая палитра
 - `ContrastColorPalette` - контрастная цветовая палитра
+- `Plugin` - базовый класс для реализации плагинов
+- `Rectangle` - реализация прямоугольника
 
 ### Фабрики (factories/)
 - `RectangleFactory` - создание прямоугольников
@@ -121,6 +136,7 @@ canvas-shapes-example-project/
 - `CanvasShapeManagerExtended` - расширенный менеджер с дополнительными функциями
 - `CanvasButtonManager` - управление UI кнопками
 - `CanvasUIManager` - обновление состояния интерфейса
+- `PluginManager` - менеджер для управления жизненным циклом плагинов
 
 ### Рендеринг (renderers/)
 - `Canvas2DRenderer` - конкретная реализация с 2D Canvas API
@@ -129,6 +145,10 @@ canvas-shapes-example-project/
 - `SmartConnectionGenerator` - умное соединение между фигурами
 - Выбор оптимальных сторон для подключения
 - Минимизация длины линий
+
+### Плагины для приложения (plugins/)
+- `DefaultResizePlugin` - Плагин подстройки размера холста под размер окна
+- `DefaultSelectionPlugin` - Плагин выбора одной фигуры
 
 ### Утилиты (utils/)
 - `randomValueOnAxis` - генерация случайных координат
@@ -170,6 +190,8 @@ canvas-shapes-example-project/
 - Легко добавлять новые типы фигур
 - Простое добавление новых типов соединений
 - Гибкая система UI без изменения основных классов
+- Расширение функциональности с помощью плагинов без изменения основного кода
+- Автоматическая регистрация встроенных плагинов
 
 ## Два варианта приложения
 

@@ -40,6 +40,7 @@
 
 <script type="module">
   import { CanvasApp } from './js/app/canvas.app.js?v=0.2.0';
+  import { ColorPalette } from './js/models/color-palette.model.js?v=0.2.0';
   import { ContrastColorPalette } from './js/models/contrast-color-palette.model.js?v=0.2.0';
   import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.2.0';
   import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.2.0';
@@ -49,7 +50,7 @@
   import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.2.0';
   import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.2.0';
 
-  const shapeFactory = new RectangleFactory(new ContrastColorPalette());
+  const rectangleFactory = new RectangleFactory(new ContrastColorPalette());
   const shapeManager = new CanvasShapeManagerExtended();
   const connectionFactory = new ArrowConnectionFactory();
   const connectionGenerator = new SmartConnectionGenerator();
@@ -60,7 +61,6 @@
     document.getElementById('canvas'),
   );
   const application = new CanvasApp({
-    shapeFactory,
     shapeManager,
     connectionFactory,
     connectionGenerator,
@@ -75,14 +75,15 @@
       text: 'Add',
       className: 'button_success',
       action: () => {
-        const shape = shapeFactory.createShape({
+        const shape = rectangleFactory.createShape({
           id: shapeManager.nextShapeId,
           canvasWidth: renderer.canvas.width,
           canvasHeight: renderer.canvas.height,
         });
 
         shapeManager.addShape(shape);
-        app.update();
+        app.render();
+        app.updateUI();
       },
     },
     {
@@ -97,7 +98,8 @@
 
         shapeManager.selectedShape = null;
         shapeManager.removeShape(selectedShape);
-        app.update();
+        app.render();
+        app.updateUI();
       },
     },
     {
@@ -107,7 +109,8 @@
       isDisabled: (shapeCount) => !shapeCount,
       action: () => {
         shapeManager.clear();
-        app.update();
+        app.render();
+        app.updateUI();
       },
     },
 
@@ -119,7 +122,8 @@
       isDisabled: (shapeCount) => !shapeCount,
       action: () => {
         shapeManager.randomizeShapes(renderer.canvasWrapper);
-        app.update()
+        app.render();
+        app.updateUI();
       },
     },
     {
@@ -130,8 +134,10 @@
         shapeManager.resetShapes({
           canvasWidth: renderer.canvas.width,
           canvasHeight: renderer.canvas.height,
+          shapeFactory: new RectangleFactory(new ColorPalette())
         });
-        app.update()
+        app.render();
+        app.updateUI();
       },
     },
     {

@@ -42,7 +42,7 @@ export class Canvas2DRenderer extends CanvasRenderer {
   render(shapes, connections) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    shapes.forEach((shape) => shape.draw(this.ctx));
     connections.forEach((connection) => connection.draw(this.ctx));
+    shapes.forEach((shape) => shape.draw(this.ctx));
   }
 }
