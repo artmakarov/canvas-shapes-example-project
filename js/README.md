@@ -12,9 +12,9 @@
 - `connection-factory.abstraction.js` - Абстрактный класс фабрики соединений
 - `connection-generator.abstraction.js` - Абстрактный класс генератора соединений
 - `plugin.abstraction.js` - Абстрактный класс плагина приложения
-- `shape.abstraction.js` - Абстрактный класс фигуры
-- `shape-factory.abstraction.js` - Абстрактный класс фабрики фигур
-- `shape-manager.abstraction.js` - Абстрактный класс менеджера фигур
+- `shape.abstraction.js` - Абстрактный класс геометрической фигуры
+- `shape-factory.abstraction.js` - Абстрактный класс фабрики геометрических фигур
+- `shape-manager.abstraction.js` - Абстрактный класс менеджера геометрических фигур
 - `ui-manager.abstraction.js` - Абстрактный класс менеджера UI
 
 ### app/
@@ -26,12 +26,11 @@
 - `rectangle.factory.js` - Фабрика для создания прямоугольников
 
 ### generators/
-- `smart-connection.generator.js` - Генератор "умных" соединений между фигурами
+- `smart-connection.generator.js` - Генератор "умных" соединений между геометрическими фигурами
 
 ### managers/
 - `canvas-button.manager.js` - Менеджер кнопок на холсте
-- `canvas-shape.manager.js` - Менеджер фигур
-- `canvas-shape-extended.manager.js` - Менеджер фигур для расширенного приложения
+- `canvas-shape.manager.js` - Менеджер геометрических фигур
 - `canvas-ui.manager.js` - Менеджер UI элементов холста
 - `plugin.manager.js` - Менеджер плагинов
 
@@ -43,7 +42,7 @@
 
 ### plugins/
 - `default-resize.plugin.js` - Плагин подстройки размера холста под размер окна
-- `default-selection.plugin.js` - Плагин выбора одной фигуры
+- `default-selection.plugin.js` - Плагин выбора одной или несколько геометрических фигур
 
 ### renderers/
 - `canvas-2d.renderer.js` - Рендерер для 2D Canvas
@@ -75,7 +74,7 @@ application.registerPlugins([new MyCustomPlugin()]);
 ### Встроенные плагины
 CanvasApp автоматически регистрирует встроенные плагины:
 - `DefaultResizePlugin` - подстройка размера холста под окно
-- `DefaultSelectionPlugin` - выбор фигур по клику мыши
+- `DefaultSelectionPlugin` - выбор геометрических фигур по клику мыши
 
 ## Преимущества архитектуры
 
