@@ -1,4 +1,4 @@
-import { CanvasRenderer } from '../interfaces/canvas-renderer.interface.js';
+import { CanvasRenderer } from '../abstractions/canvas-renderer.abstraction.js';
 
 /**
  * Реализация рендерера холста

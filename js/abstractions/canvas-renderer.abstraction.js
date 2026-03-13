@@ -1,6 +1,6 @@
 /**
- * Интерфейс для рендеринга
- * @interface
+ * Абстрактный класс для рендеринга
+ * @abstract
  */
 export class CanvasRenderer {
   /** @param {HTMLCanvasElement} canvas */

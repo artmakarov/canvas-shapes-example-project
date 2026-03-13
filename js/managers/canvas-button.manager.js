@@ -1,4 +1,4 @@
-import { ButtonManager } from '../interfaces/button-manager.interface.js';
+import { ButtonManager } from '../abstractions/button-manager.abstraction.js';
 
 /**
  * Реализация менеджера кнопок

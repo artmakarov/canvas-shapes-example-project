@@ -14,6 +14,18 @@
 ```
 canvas-shapes-example-project/
 ├── js/                                             # JavaScript модули
+│   ├── abstractions/                               # Абстрактные классы и типы
+│   │   ├── button-manager.abstraction.js           # Абстрактный класс менеджера кнопок
+│   │   ├── canvas-figure.abstraction.js            # Абстрактный класс базовой фигуры
+│   │   ├── canvas-renderer.abstraction.js          # Абстрактный класс рендерера
+│   │   ├── connection.abstraction.js               # Абстрактный класс соединения
+│   │   ├── connection-factory.abstraction.js       # Абстрактный класс фабрики соединений
+│   │   ├── connection-generator.abstraction.js     # Абстрактный класс генератора соединений
+│   │   ├── plugin.abstraction.js                   # Абстрактный класс плагина приложения
+│   │   ├── shape.abstraction.js                    # Абстрактный класс фигуры
+│   │   ├── shape-factory.abstraction.js            # Абстрактный класс фабрики фигур
+│   │   ├── shape-manager.abstraction.js            # Абстрактный класс менеджера фигур
+│   │   └── ui-manager.abstraction.js               # Абстрактный класс менеджера UI
 │   ├── app/                                        # Главные классы приложения
 │   │   ├── canvas.app.js                           # Основное приложение
 │   │   └── canvas-base.app.js                      # Базовый класс приложения
@@ -22,17 +34,6 @@ canvas-shapes-example-project/
 │   │   └── rectangle.factory.js                    # Фабрика прямоугольников
 │   ├── generators/                                 # Генераторы
 │   │   └── smart-connection.generator.js           # Генератор соединений
-│   ├── interfaces/                                 # Интерфейсы и типы
-│   │   ├── base-plugin.interface.js                # Интерфейс плагина приложения
-│   │   ├── button-manager.interface.js             # Интерфейс менеджера кнопок
-│   │   ├── canvas-renderer.interface.js            # Интерфейс рендерера
-│   │   ├── connection.interface.js                 # Интерфейс соединения
-│   │   ├── connection-factory.interface.js         # Интерфейс фабрики соединений
-│   │   ├── connection-generator.interface.js       # Интерфейс генератора соединений
-│   │   ├── shape.interface.js                      # Интерфейс фигуры
-│   │   ├── shape-factory.interface.js              # Интерфейс фабрики фигур
-│   │   ├── shape-manager.interface.js              # Интерфейс менеджера фигур
-│   │   └── ui-manager.interface.js                 # Интерфейс менеджера UI
 │   ├── managers/                                   # Менеджеры компонентов
 │   │   ├── canvas-button.manager.js                # Менеджер кнопок
 │   │   ├── canvas-shape.manager.js                 # Менеджер фигур
@@ -43,7 +44,6 @@ canvas-shapes-example-project/
 │   │   ├── arrow-connection.model.js               # Модель стрелочного соединения
 │   │   ├── color-palette.model.js                  # Цветовая палитра
 │   │   ├── contrast-color-palette.model.js         # Контрастная цветовая палитра
-│   │   ├── plugin.model.js                         # Базовый класс для реализации плагинов
 │   │   └── rectangle.model.js                      # Модель фигуры прямоугольника
 │   ├── plugins/                                    # Плагины для приложения
 │   │   ├── default-resize.plugin.js                # Плагин подстройки размера холста под размер окна
@@ -76,9 +76,9 @@ canvas-shapes-example-project/
 
 ### 1. Паттерн Шаблонный метод
 - Скелет алгоритма в базовом классе, некоторые методы переопределяются в наследниках
-- Все компоненты имеют четкие интерфейсы в `/js/interfaces/`
+- Все компоненты имеют четкие абстрактные классы в `/js/abstractions/`
 - Четкое разделение ответственности между рендерингом, логикой и UI
-- Интерфейсы обеспечивают гибкость и тестируемость
+- Абстрактные классы обеспечивают гибкость и тестируемость
 
 ### 2. Паттерн Абстрактная фабрика
 - Фабрика семейств связанных объектов без привязки к конкретным классам
@@ -104,27 +104,27 @@ canvas-shapes-example-project/
 
 ## Основные компоненты
 
+### Абстрактные классы (abstractions/)
+- `CanvasFigure` - базовый абстрактный класс для всех фигур на холсте
+- `Shape` - абстрактный класс для геометрических фигур (наследуется от CanvasFigure)
+- `ShapeFactory` - абстрактный класс фабрики фигур
+- `ShapeManager` - абстрактный класс менеджера фигур
+- `Connection` - абстрактный класс для соединений (наследуется от CanvasFigure)
+- `ConnectionFactory` - абстрактный класс фабрики соединений
+- `ConnectionGenerator` - абстрактный класс генератора соединений
+- `ButtonManager` - абстрактный класс менеджера кнопок
+- `UIManager` - абстрактный класс менеджера UI
+- `CanvasRenderer` - абстрактный класс рендерера
+- `Plugin` - абстрактный класс плагина приложения
+
 ### Приложение (app/)
 - `CanvasAppBase` - базовый класс для расширения
 - `CanvasApp` - основное приложение
-
-### Интерфейсы (interfaces/)
-- `Shape` - базовый интерфейс для всех фигур
-- `ShapeFactory` - интерфейс фабрики фигур
-- `ShapeManager` - интерфейс менеджера фигур
-- `Connection` - базовый интерфейс для соединений
-- `ConnectionFactory` - интерфейс фабрики соединений
-- `ConnectionGenerator` - интерфейс генератора соединений
-- `ButtonManager` - интерфейс менеджера кнопок
-- `UIManager` - интерфейс менеджера UI
-- `CanvasRenderer` - интерфейс рендерера
-- `BasePlugin` - интерфейс плагина приложения
 
 ### Фигуры и модели (models/)
 - `ArrowConnection` - стрелочные соединения между фигурами
 - `ColorPalette` - цветовая палитра
 - `ContrastColorPalette` - контрастная цветовая палитра
-- `Plugin` - базовый класс для реализации плагинов
 - `Rectangle` - реализация прямоугольника
 
 ### Фабрики (factories/)
@@ -176,7 +176,7 @@ canvas-shapes-example-project/
 
 ### Полная типизация
 - Все методы и свойства имеют JSDoc аннотации
-- Интерфейсы для всех основных компонентов
+- Абстрактные классы для всех основных компонентов
 - TypeScript-подобные типы в комментариях
 
 ### SOLID принципы
@@ -187,11 +187,72 @@ canvas-shapes-example-project/
 - **D**ependency Inversion: Зависимости внедряются через конструктор
 
 ### Расширяемость
+- Наследование от базовых абстрактных классов для создания новых компонентов
 - Легко добавлять новые типы фигур
 - Простое добавление новых типов соединений
 - Гибкая система UI без изменения основных классов
 - Расширение функциональности с помощью плагинов без изменения основного кода
 - Автоматическая регистрация встроенных плагинов
+
+## Примеры кода
+
+### Создание нового типа фигуры
+```javascript
+import { Shape } from './js/abstractions/shape.abstraction.js';
+
+class Circle extends Shape {
+  constructor(properties) {
+    super(properties);
+    this._radius = properties.radius;
+  }
+  
+  draw(ctx) {
+    // Реализация
+  }
+  
+  containsPoint(coordinate) {
+    // Реализация
+  }
+  
+  getEdgePoint(edge) {
+    // Реализация
+  }
+}
+```
+
+### Добавление новой кнопки
+```javascript
+{
+  id: 'newFeatureBtn',
+  text: 'New Feature',
+  className: 'button_info',
+  action: () => { /* ... */ },
+  isEnabled: (shapeCount) => shapeCount > 0
+}
+```
+
+### Создание нового плагина
+
+```javascript
+import { Plugin } from './js/abstractions/plugin.abstraction.js';
+
+export class MyCustomPlugin extends Plugin {
+  /** @return {string} */
+  getName() {
+    return 'my-custom-plugin';
+  }
+
+  /** @return {void} */
+  onInit() {
+    // Логика инициализации плагина
+  }
+
+  /** @return {void} */
+  onDestroy() {
+    // Логика деинициализации плагина
+  }
+}
+```
 
 ## Два варианта приложения
 

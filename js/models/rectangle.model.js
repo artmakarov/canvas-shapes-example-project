@@ -1,4 +1,4 @@
-import { Shape } from '../interfaces/shape.interface.js';
+import { Shape } from '../abstractions/shape.abstraction.js';
 
 /**
  * Модель параметров для класса {@link Rectangle}
@@ -14,7 +14,7 @@ import { Shape } from '../interfaces/shape.interface.js';
 
 export class Rectangle extends Shape {
   /** @type {string|CanvasGradient|CanvasPattern} */
-  static backgroundStyle = 'rgba(255, 255, 255, 0.8)'
+  static backgroundStyle = 'rgba(255, 255, 255, 0.8)';
   /** @type {string|CanvasGradient|CanvasPattern} */
   static colorSelected = '#FFD700';
 
@@ -38,7 +38,13 @@ export class Rectangle extends Shape {
     this._height = properties.height;
   }
 
+  /** @override */
   draw(ctx) {
+    if (!(ctx instanceof CanvasRenderingContext2D)) {
+      console.warn('Rectangle поддерживает только CanvasRenderingContext2D');
+      return;
+    }
+
     // Заливка
     ctx.fillStyle = Rectangle.backgroundStyle;
     ctx.fillRect(this.x, this.y, this._width, this._height);

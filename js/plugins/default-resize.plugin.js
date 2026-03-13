@@ -1,4 +1,4 @@
-import { Plugin } from '../models/plugin.model.js';
+import { Plugin } from '../abstractions/plugin.abstraction.js';
 
 /**
  * Плагин подстройки размера холста под размер окна

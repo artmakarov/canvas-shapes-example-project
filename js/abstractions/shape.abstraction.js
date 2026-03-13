@@ -1,3 +1,5 @@
+import { CanvasFigure } from './canvas-figure.abstraction.js';
+
 /**
  * @typedef {{ x: number, y: number}} Coordinate
  */
@@ -21,14 +23,16 @@
  */
 
 /**
- * Интерфейс для всех фигур на холсте
- * @interface
+ * Абстрактный класс для всех геометрических фигур на холсте
+ * @abstract
  */
-export class Shape {
+export class Shape extends CanvasFigure {
   /**
    * @param {ShapeProperties} properties
    */
   constructor(properties) {
+    super()
+
     const { id, name, x, y, color } = properties;
 
     /** @type {number} */
@@ -94,11 +98,11 @@ export class Shape {
 
   /**
    * @abstract
-   * @param {CanvasRenderingContext2D} ctx
+   * @param {RenderingContext} ctx
    * @return {void}
    */
   draw(ctx) {
-    throw new Error('Метод draw должен быть реализован подклассом!');
+    super.draw(ctx);
   }
 
   /**

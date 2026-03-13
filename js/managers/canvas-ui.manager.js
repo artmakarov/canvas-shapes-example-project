@@ -1,4 +1,4 @@
-import { UIManager } from '../interfaces/ui-manager.interface.js';
+import { UIManager } from '../abstractions/ui-manager.abstraction.js';
 
 /**
  * Реализация менеджера UI с использованием ButtonManager

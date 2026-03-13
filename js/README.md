@@ -4,6 +4,19 @@
 
 ## Структура
 
+### abstractions/
+- `button-manager.abstraction.js` - Абстрактный класс менеджера кнопок
+- `canvas-figure.abstraction.js` - Абстрактный класс базовой фигуры
+- `canvas-renderer.abstraction.js` - Абстрактный класс рендерера
+- `connection.abstraction.js` - Абстрактный класс соединения
+- `connection-factory.abstraction.js` - Абстрактный класс фабрики соединений
+- `connection-generator.abstraction.js` - Абстрактный класс генератора соединений
+- `plugin.abstraction.js` - Абстрактный класс плагина приложения
+- `shape.abstraction.js` - Абстрактный класс фигуры
+- `shape-factory.abstraction.js` - Абстрактный класс фабрики фигур
+- `shape-manager.abstraction.js` - Абстрактный класс менеджера фигур
+- `ui-manager.abstraction.js` - Абстрактный класс менеджера UI
+
 ### app/
 - `canvas.app.js` - Основное приложение для базового функционала
 - `canvas-base.app.js` - Базовый класс приложения с поддержкой плагинов
@@ -14,18 +27,6 @@
 
 ### generators/
 - `smart-connection.generator.js` - Генератор "умных" соединений между фигурами
-
-### interfaces/
-- `base-plugin.interface.js` - Интерфейс плагина приложения
-- `button-manager.interface.js` - Интерфейс для управления кнопками
-- `canvas-renderer.interface.js` - Интерфейс рендерера
-- `connection.interface.js` - Интерфейс соединения
-- `connection-factory.interface.js` - Интерфейс фабрики соединений
-- `connection-generator.interface.js` - Интерфейс генератора соединений
-- `shape.interface.js` - Интерфейс фигуры
-- `shape-factory.interface.js` - Интерфейс фабрики фигур
-- `shape-manager.interface.js` - Интерфейс менеджера фигур
-- `ui-manager.interface.js` - Интерфейс менеджера UI
 
 ### managers/
 - `canvas-button.manager.js` - Менеджер кнопок на холсте
@@ -38,7 +39,6 @@
 - `arrow-connection.model.js` - Модель стрелочного соединения
 - `color-palette.model.js` - Модель цветовой палитры
 - `contrast-color-palette.model.js` - Модель контрастной цветовой палитры
-- `plugin.model.js` - Базовый класс для реализации плагинов
 - `rectangle.model.js` - Модель прямоугольника
 
 ### plugins/
