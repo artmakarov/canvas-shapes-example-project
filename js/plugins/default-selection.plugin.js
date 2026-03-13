@@ -11,10 +11,14 @@ export class DefaultSelectionPlugin extends Plugin {
       x: event.clientX - rect.left,
       y: event.clientY - rect.top,
     };
-    const shape = this.app.getShapeAtPoint(coordinate);
+    const shapeAtPoint = this.app.getShapeAtPoint(coordinate);
 
-    this.app.setSelectedShapes(shape ? [shape] : []);
-  }
+    if (event.ctrlKey) {
+      this._multipleSelection(shapeAtPoint);
+    } else {
+      this._singleSelection(shapeAtPoint);
+    }
+  };
 
   /** @return {string} */
   getName() {
@@ -28,6 +32,35 @@ export class DefaultSelectionPlugin extends Plugin {
 
   /** @return {void} */
   onDestroy() {
-    this.app.canvas.removeEventListener('click', this.canvasClickHandler)
+    this.app.canvas.removeEventListener('click', this.canvasClickHandler);
+  }
+
+  /**
+   * @param {Shape|null} shapeAtPoint
+   * @private
+   */
+  _singleSelection(shapeAtPoint) {
+    // Если не было изменений, то ничего не делаем,
+    // чтобы не вызывать рендеринг впустую.
+    if (!shapeAtPoint && !this.app.getSelectedShapes().length) {
+      return;
+    }
+
+    this.app.setSelectedShapes(shapeAtPoint ? [shapeAtPoint] : []);
+  }
+
+  /**
+   * @param {Shape|null} shapeAtPoint
+   * @private
+   */
+  _multipleSelection(shapeAtPoint) {
+    if (!shapeAtPoint) return;
+
+    const selectedShapes = this.app.getSelectedShapes();
+    const newSelectedShapes = shapeAtPoint.selected
+      ? selectedShapes.filter((selectedShape) => selectedShape !== shapeAtPoint)
+      : selectedShapes.concat(shapeAtPoint);
+
+    this.app.setSelectedShapes(newSelectedShapes);
   }
 }
