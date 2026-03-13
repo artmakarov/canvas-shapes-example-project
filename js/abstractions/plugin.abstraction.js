@@ -1,13 +1,9 @@
-import { BasePlugin } from '../abstractions/base-plugin.abstraction.js';
-
 /**
  * Абстрактный класс для всех плагинов
  * @abstract
  */
-export class Plugin extends BasePlugin {
+export class Plugin {
   constructor() {
-    super();
-
     /**
      * @type {boolean}
      * @protected

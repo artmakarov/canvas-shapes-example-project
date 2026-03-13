@@ -20,7 +20,7 @@
 ### Пример реализации плагина
 
 ```javascript
-import { Plugin } from './js/models/plugin.model.js';
+import { Plugin } from './js/abstractions/plugin.abstraction.js';
 
 export class DragAndDropPlugin extends Plugin {
   /**
@@ -102,8 +102,7 @@ import { DefaultSelectionPlugin } from './js/plugins/default-selection.plugin.js
 CanvasApp использует систему плагинов для расширения функциональности:
 
 1. **PluginManager** - управляет жизненным циклом плагинов
-2. **BasePlugin** - базовый интерфейс для всех плагинов
-3. **Plugin** - базовый класс для реализации плагинов
+2. **Plugin** - базовый абстрактный класс для реализации плагинов
 
 ### Автоматическая инициализация
 
