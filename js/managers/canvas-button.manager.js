@@ -38,13 +38,12 @@ export class CanvasButtonManager extends ButtonManager {
   }
 
   /**
-   * @param {number} shapeCount
-   * @param {Shape|null} selectedShape
+   * @param {AppStateSnapshot} appStateSnapshot
    * @return {void}
    */
-  updateUI(shapeCount, selectedShape) {
-    this._updateButtonStates(shapeCount, selectedShape);
-    this._updateInfoText(shapeCount, selectedShape);
+  updateUI(appStateSnapshot) {
+    this._updateButtonStates(appStateSnapshot);
+    this._updateInfoText(appStateSnapshot);
   }
 
   /**
@@ -66,28 +65,27 @@ export class CanvasButtonManager extends ButtonManager {
   }
 
   /**
-   * @param {number} shapeCount
-   * @param {Shape|null} selectedShape
+   * @param {AppStateSnapshot} appStateSnapshot
    * @return {void}
    */
-  _updateButtonStates(shapeCount, selectedShape) {
+  _updateButtonStates(appStateSnapshot) {
     this.buttons.forEach(({ button, config }) => {
-      button.disabled = config.isDisabled?.(shapeCount, selectedShape) ?? false;
+      button.disabled = config.isDisabled?.(appStateSnapshot) ?? false;
     });
   }
 
   /**
-   * @param {number} shapeCount
-   * @param {Shape|null} selectedShape
+   * @param {AppStateSnapshot} appStateSnapshot
    * @return {void}
    */
-  _updateInfoText(shapeCount, selectedShape) {
+  _updateInfoText(appStateSnapshot) {
+    const { selectedShapes, shapes } = appStateSnapshot
     const info = document.querySelector(this.infoSelector);
 
     if (!info) return;
 
-    info.textContent = selectedShape
-      ? `Выбрана: ${selectedShape.name}`
-      : `Фигур: ${shapeCount}. Кликните Add для создания.`;
+    info.textContent = selectedShapes.length
+      ? `Выбрано: ${selectedShapes.map((shape) => shape.name)}`
+      : `Фигур: ${shapes.length}. Кликните Add для создания.`;
   }
 }

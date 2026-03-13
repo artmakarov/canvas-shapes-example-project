@@ -12,11 +12,10 @@ export class CanvasShapeManager extends ShapeManager {
     this._shapes = [];
 
     /**
-     *
-     * @type {Shape|null}
+     * @type {Shape[]}
      * @protected
      */
-    this._selectedShape = null;
+    this._selectedShapes = [];
 
     /**
      * @type {number}
@@ -30,22 +29,26 @@ export class CanvasShapeManager extends ShapeManager {
     return this._nextShapeId;
   }
 
-  /** @return {Shape|null} */
-  get selectedShape() {
-    return this._selectedShape;
+  /** @return {Shape[]} */
+  get selectedShapes() {
+    return this._selectedShapes.slice();
   }
 
-  /** @param {Shape|null} shape */
-  set selectedShape(shape) {
-    if (this._selectedShape) {
-      this._selectedShape.unselect();
+  /** @param {Shape[]} shapes */
+  set selectedShapes(shapes) {
+    if (this._selectedShapes.length) {
+      for (const selectedShape of this._selectedShapes) {
+        selectedShape.unselect()
+      }
     }
 
-    this._selectedShape = shape;
-
-    if (shape) {
-      shape.select();
+    if (shapes.length) {
+      for (const shape of shapes) {
+        shape.select()
+      }
     }
+
+    this._selectedShapes = shapes;
   }
 
   /**
@@ -71,8 +74,8 @@ export class CanvasShapeManager extends ShapeManager {
 
   /** @return {void} */
   clear() {
+    this._selectedShapes = [];
     this._shapes = [];
-    this._selectedShape = null;
     this._nextShapeId = 1;
   }
 
@@ -82,7 +85,7 @@ export class CanvasShapeManager extends ShapeManager {
    */
   getShapeAtPoint(coordinate) {
     /** @type {Shape|null} */
-    let shapeAtPoint = null
+    let shapeAtPoint = null;
 
     /*
      Находим фигуру с наибольшим индексом в массиве.
@@ -90,7 +93,7 @@ export class CanvasShapeManager extends ShapeManager {
      Потому что самый быстрый.
      ...но стоит сравнить/перепроверить с другими алгоритмами!
      */
-    for (let i = this._shapes.length - 1; i >= 0 ; i-=1) {
+    for (let i = this._shapes.length - 1; i >= 0; i-=1) {
       const shape = this._shapes[i];
 
       if (shape.containsPoint(coordinate)) {
@@ -99,11 +102,11 @@ export class CanvasShapeManager extends ShapeManager {
       }
     }
 
-    return shapeAtPoint
+    return shapeAtPoint;
   }
 
   /** @return {Shape[]} */
   getAllShapes() {
-    return [...this._shapes];
+    return this._shapes.slice();
   }
 }

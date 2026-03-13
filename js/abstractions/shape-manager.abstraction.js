@@ -13,18 +13,18 @@ export class ShapeManager {
 
   /**
    * @abstract
-   * @return {Shape|null}
+   * @return {Shape[]}
    */
-  get selectedShape() {
-    throw new Error('Метод `get selectedShape` должен быть реализован подклассом!');
+  get selectedShapes() {
+    throw new Error('Метод `get selectedShapes` должен быть реализован подклассом!');
   }
 
   /**
    * @abstract
-   * @param {Shape|null} shape
+   * @param {Shape[]} shapes
    */
-  set selectedShape(shape) {
-    throw new Error('Метод `set selectedShape` должен быть реализован подклассом!');
+  set selectedShapes(shapes) {
+    throw new Error('Метод `set selectedShapes` должен быть реализован подклассом!');
   }
 
   /**
