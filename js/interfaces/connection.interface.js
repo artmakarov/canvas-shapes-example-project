@@ -1,3 +1,5 @@
+import { CanvasFigure } from './canvas-figure.interface.js';
+
 /**
  * Модель параметров для класса {@link Connection}
  * @typedef {Object} ConnectionProperties
@@ -13,11 +15,13 @@
  * Интерфейс для всех типов соединений между фигурами
  * @interface
  */
-export class Connection {
+export class Connection extends CanvasFigure {
   /**
    * @param {ConnectionProperties} properties
    */
   constructor(properties) {
+    super();
+
     const { startX, startY, endX, endY, fromEdge, toEdge } = properties;
 
     this.startX = startX;
@@ -30,10 +34,10 @@ export class Connection {
 
   /**
    * @abstract
-   * @param {CanvasRenderingContext2D} ctx
+   * @param {RenderingContext} ctx
    * @return {void}
    */
   draw(ctx) {
-    throw new Error('Метод draw должен быть реализован подклассом!');
+    super.draw(ctx);
   }
 }

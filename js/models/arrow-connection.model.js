@@ -1,9 +1,15 @@
 import { Connection } from '../interfaces/connection.interface.js';
 
 export class ArrowConnection extends Connection {
-  static color = '#777'
+  static color = '#777';
 
+  /** @override */
   draw(ctx) {
+    if (!(ctx instanceof CanvasRenderingContext2D)) {
+      console.warn('ArrowConnection поддерживает только CanvasRenderingContext2D');
+      return;
+    }
+
     ctx.strokeStyle = ArrowConnection.color;
     ctx.lineWidth = 1;
 
