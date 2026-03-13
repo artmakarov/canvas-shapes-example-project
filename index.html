@@ -75,7 +75,7 @@
       id: 'deleteBtn',
       text: 'Delete',
       className: 'button_danger',
-      isDisabled: (shapeCount, selectedShape) => !selectedShape,
+      isDisabled: ({ selectedShape }) => !selectedShape,
       action: () => {
         const { selectedShape } = shapeManager;
 
@@ -91,7 +91,7 @@
       id: 'clearBtn',
       text: 'Clear',
       className: 'button_secondary',
-      isDisabled: (shapeCount) => !shapeCount,
+      isDisabled: ({ shapeCount }) => !shapeCount,
       action: () => {
         shapeManager.clear();
         app.render();

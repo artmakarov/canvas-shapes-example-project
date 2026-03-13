@@ -14,11 +14,10 @@ export class CanvasUIManager extends UIManager {
   }
 
   /**
-   * @param {number} shapeCount
-   * @param {Shape|null} selectedShape
+   * @param {AppStateSnapshot} appStateSnapshot
    * @return {void}
    */
-  update(shapeCount, selectedShape) {
-    this.buttonManager.updateUI(shapeCount, selectedShape);
+  update(appStateSnapshot) {
+    this.buttonManager.updateUI(appStateSnapshot);
   }
 }

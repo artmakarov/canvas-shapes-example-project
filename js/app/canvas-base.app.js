@@ -77,6 +77,16 @@ export class CanvasAppBase {
     return this._renderer;
   }
 
+  /** @return {AppStateSnapshot} */
+  getStateSnapshot() {
+    const shapes = this._shapeManager.getAllShapes();
+
+    return {
+      shapeCount: shapes.length,
+      selectedShape: this._shapeManager.selectedShape,
+    };
+  }
+
   /** @return {void} */
   render() {
     const shapes = this._shapeManager.getAllShapes();
@@ -87,10 +97,9 @@ export class CanvasAppBase {
 
   /** @return {void} */
   updateUI() {
-    const shapes = this._shapeManager.getAllShapes();
-    const selectedShape = this._shapeManager.selectedShape;
+    const stateSnapshot = this.getStateSnapshot();
 
-    this._uiManager.update(shapes.length, selectedShape);
+    this._uiManager.update(stateSnapshot);
   }
 
   /** @param {ConnectionFactory} connectionFactory */

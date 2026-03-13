@@ -90,7 +90,7 @@
       id: 'deleteBtn',
       text: 'Delete',
       className: 'button_danger',
-      isDisabled: (shapeCount, selectedShape) => !selectedShape,
+      isDisabled: ({ selectedShape }) => !selectedShape,
       action: () => {
         const { selectedShape } = shapeManager;
 
@@ -106,7 +106,7 @@
       id: 'clearBtn',
       text: 'Clear',
       className: 'button_secondary',
-      isDisabled: (shapeCount) => !shapeCount,
+      isDisabled: ({ shapeCount }) => !shapeCount,
       action: () => {
         shapeManager.clear();
         app.render();
@@ -119,7 +119,7 @@
       id: 'randomizeBtn',
       text: 'Randomize',
       className: 'button_warning',
-      isDisabled: (shapeCount) => !shapeCount,
+      isDisabled: ({ shapeCount }) => !shapeCount,
       action: () => {
         shapeManager.randomizeShapes(renderer.canvasWrapper);
         app.render();
@@ -134,7 +134,7 @@
         shapeManager.resetShapes({
           canvasWidth: renderer.canvas.width,
           canvasHeight: renderer.canvas.height,
-          shapeFactory: new RectangleFactory(new ColorPalette())
+          shapeFactory: new RectangleFactory(new ColorPalette()),
         });
         app.render();
         app.updateUI();
@@ -145,15 +145,14 @@
       text: 'Info',
       className: 'button_secondary',
       action: () => {
-        const shapes = shapeManager.getAllShapes();
-        const selectedShape = shapeManager.selectedShape;
+        const { shapeCount, selectedShape } = app.getStateSnapshot();
 
         let infoText = `Статистика:\n`;
-        infoText += `Всего фигур: ${shapes.length}\n`;
+        infoText += `Всего фигур: ${shapeCount}\n`;
         infoText += `Выбрано: ${selectedShape?.name ?? 'Нет'}`;
 
         alert(infoText);
-      }
+      },
     },
   ]);
 

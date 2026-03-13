@@ -5,7 +5,7 @@
  * @property {string} text - Текст кнопки
  * @property {string} className - CSS классы кнопки
  * @property {(e: PointerEvent) => void} action - Функция действия кнопки
- * @property {(shapeCount: number, selectedShape: Shape|null) => boolean} [isDisabled] - Функция
+ * @property {(appStateSnapshot: AppStateSnapshot) => boolean} [isDisabled] - Функция
  *   проверки недоступности кнопки
  */
 
@@ -25,11 +25,10 @@ export class ButtonManager {
 
   /**
    * @abstract
-   * @param {number} shapeCount
-   * @param {Shape|null} selectedShape
+   * @param {AppStateSnapshot} appStateSnapshot
    * @return {void}
    */
-  updateUI(shapeCount, selectedShape) {
+  updateUI(appStateSnapshot) {
     throw new Error('Метод updateUI должен быть реализован подклассом!');
   }
 }
