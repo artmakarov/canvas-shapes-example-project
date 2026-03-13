@@ -34,6 +34,8 @@
   import { CanvasButtonManager } from './js/managers/canvas-button.manager.js?v=0.2.0';
   import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.2.0';
   import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.2.0';
+  import { DefaultResizePlugin } from './js/plugins/default-resize.plugin.js?v=0.2.0';
+  import { DefaultSelectionPlugin } from './js/plugins/default-selection.plugin.js?v=0.2.0';
 
   const buttonManager = new CanvasButtonManager();
   const application = new CanvasApp({
@@ -47,6 +49,11 @@
       document.getElementById('canvas'),
     ),
   });
+
+  application.registerPlugins([
+    new DefaultResizePlugin(),
+    new DefaultSelectionPlugin(),
+  ])
 
   application.setButtons((app) => /** @type ButtonConfig[] */ [
     {
