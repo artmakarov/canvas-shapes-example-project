@@ -66,21 +66,21 @@
       id: 'deleteBtn',
       text: 'Delete',
       className: 'button_danger',
-      isDisabled: ({ selectedShape }) => !selectedShape,
+      isDisabled: ({ selectedShapes }) => !selectedShapes.length,
       action: () => {
-        const selectedShape = app.getSelectedShape();
+        const selectedShapes = app.getSelectedShapes();
 
-        if (!selectedShape) return;
+        if (!selectedShapes.length) return;
 
-        app.setSelectedShape(null);
-        app.removeShapes([selectedShape]);
+        app.setSelectedShapes([]);
+        app.removeShapes(selectedShapes);
       },
     },
     {
       id: 'clearBtn',
       text: 'Clear',
       className: 'button_secondary',
-      isDisabled: ({ shapeCount }) => !shapeCount,
+      isDisabled: ({ shapes }) => !shapes.length,
       action: () => app.clearShapes(),
     },
   ]);

@@ -227,7 +227,7 @@ class Circle extends Shape {
   text: 'New Feature',
   className: 'button_info',
   action: () => { /* ... */ },
-  isEnabled: (shapeCount) => shapeCount > 0
+  isEnabled: ({ shapes }) => !!shapes.length
 }
 ```
 
@@ -284,7 +284,7 @@ export class MyCustomPlugin extends Plugin {
 Проект следует строгим правилам кодирования:
 
 - **Соглашения об именовании**: PascalCase для классов, camelCase для методов
-- **Приватные члены**: с префиксом подчеркивания (`_shapes`, `_selectedShape`)
+- **Приватные члены**: с префиксом подчеркивания (`_shapes`, `_selectedShapes`)
 - **JSDoc аннотации**: Все методы и свойства имеют типизацию
 - **SOLID принципы**: Строгое следование принципам объектно-ориентированного программирования
 

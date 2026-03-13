@@ -1,8 +1,8 @@
 /**
  * Снимок состояния приложения
  * @typedef {Object} AppStateSnapshot
- * @property {number} shapeCount
- * @property {Shape|null} selectedShape
+ * @property {Shape[]} shapes
+ * @property {Shape[]} selectedShapes
  */
 
 /**

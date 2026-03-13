@@ -13,7 +13,7 @@ export class DefaultSelectionPlugin extends Plugin {
     };
     const shape = this.app.getShapeAtPoint(coordinate);
 
-    this.app.setSelectedShape(shape);
+    this.app.setSelectedShapes(shape ? [shape] : []);
   }
 
   /** @return {string} */

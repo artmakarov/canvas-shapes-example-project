@@ -81,21 +81,21 @@
       id: 'deleteBtn',
       text: 'Delete',
       className: 'button_danger',
-      isDisabled: ({ selectedShape }) => !selectedShape,
+      isDisabled: ({ selectedShapes }) => !selectedShapes.length,
       action: () => {
-        const selectedShape = app.getSelectedShape();
+        const selectedShapes = app.getSelectedShapes();
 
-        if (!selectedShape) return;
+        if (!selectedShapes.length) return;
 
-        app.setSelectedShape(null);
-        app.removeShapes([selectedShape]);
+        app.setSelectedShapes([]);
+        app.removeShapes(selectedShapes);
       },
     },
     {
       id: 'clearBtn',
       text: 'Clear',
       className: 'button_secondary',
-      isDisabled: ({ shapeCount }) => !shapeCount,
+      isDisabled: ({ shapes }) => !shapes.length,
       action: () => app.clearShapes(),
     },
 
@@ -104,7 +104,7 @@
       id: 'randomizeBtn',
       text: 'Randomize',
       className: 'button_warning',
-      isDisabled: ({ shapeCount }) => !shapeCount,
+      isDisabled: ({ shapes }) => !shapes.length,
       action: () => {
         const shapes = app.getAllShapes()
         const maxWidth = app.canvas.clientWidth - /* ширина прямоугольника */ 140;
@@ -139,11 +139,11 @@
       text: 'Info',
       className: 'button_secondary',
       action: () => {
-        const { shapeCount, selectedShape } = app.getStateSnapshot();
+        const { shapes, selectedShapes } = app.getStateSnapshot();
 
         let infoText = `Статистика:\n`;
-        infoText += `Всего фигур: ${shapeCount}\n`;
-        infoText += `Выбрано: ${selectedShape?.name ?? 'Нет'}`;
+        infoText += `Всего фигур: ${shapes.length}\n`;
+        infoText += `Выбрано: ${selectedShapes.length ?? 'Нет'}`;
 
         alert(infoText);
       },

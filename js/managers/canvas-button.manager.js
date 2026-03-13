@@ -79,13 +79,13 @@ export class CanvasButtonManager extends ButtonManager {
    * @return {void}
    */
   _updateInfoText(appStateSnapshot) {
-    const { selectedShape, shapeCount } = appStateSnapshot
+    const { selectedShapes, shapes } = appStateSnapshot
     const info = document.querySelector(this.infoSelector);
 
     if (!info) return;
 
-    info.textContent = selectedShape
-      ? `Выбрана: ${selectedShape.name}`
-      : `Фигур: ${shapeCount}. Кликните Add для создания.`;
+    info.textContent = selectedShapes.length
+      ? `Выбрано: ${selectedShapes.map((shape) => shape.name)}`
+      : `Фигур: ${shapes.length}. Кликните Add для создания.`;
   }
 }

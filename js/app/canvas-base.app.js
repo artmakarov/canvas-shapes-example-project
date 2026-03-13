@@ -90,13 +90,14 @@ export class CanvasAppBase {
     this._renderer = renderer;
   }
 
-  /** @return {AppStateSnapshot} */
+  /**
+   * Возвращает снимок состояния приложения
+   * @return {AppStateSnapshot}
+   */
   getStateSnapshot() {
-    const shapes = this._shapeManager.getAllShapes();
-
     return {
-      shapeCount: shapes.length,
-      selectedShape: this._shapeManager.selectedShape,
+      shapes: this._shapeManager.getAllShapes(),
+      selectedShapes: this._shapeManager.selectedShapes,
     };
   }
 
@@ -189,20 +190,20 @@ export class CanvasAppBase {
   }
 
   /**
-   * Возвращает выбранную фигуру
-   * @return {Shape|null}
+   * Возвращает выбранные фигуры
+   * @return {Shape[]}
    */
-  getSelectedShape() {
-    return this._shapeManager.selectedShape
+  getSelectedShapes() {
+    return this._shapeManager.selectedShapes
   }
 
   /**
-   * Устанавливает выбранную фигуру
-   * @param {Shape|null} shape
+   * Устанавливает выбранные фигуры
+   * @param {Shape[]} shapes
    * @return {void}
    */
-  setSelectedShape(shape) {
-    this._shapeManager.selectedShape = shape;
+  setSelectedShapes(shapes) {
+    this._shapeManager.selectedShapes = shapes;
 
     this.render();
     this.updateUI();
