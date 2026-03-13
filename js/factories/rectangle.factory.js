@@ -1,4 +1,4 @@
-import { ShapeFactory } from '../interfaces/shape-factory.interface.js';
+import { ShapeFactory } from '../abstractions/shape-factory.abstraction.js';
 import { Rectangle } from '../models/rectangle.model.js';
 import { randomValueOnAxis } from '../utils/index.js';
 

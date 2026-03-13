@@ -1,4 +1,4 @@
-import { Connection } from '../interfaces/connection.interface.js';
+import { Connection } from '../abstractions/connection.abstraction.js';
 
 export class ArrowConnection extends Connection {
   static color = '#777';

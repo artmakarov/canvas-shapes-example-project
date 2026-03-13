@@ -1,4 +1,4 @@
-import { ConnectionFactory } from '../interfaces/connection-factory.interface.js';
+import { ConnectionFactory } from '../abstractions/connection-factory.abstraction.js';
 import { ArrowConnection } from '../models/arrow-connection.model.js';
 
 /**

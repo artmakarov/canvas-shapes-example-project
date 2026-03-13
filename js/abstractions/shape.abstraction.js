@@ -1,4 +1,4 @@
-import { CanvasFigure } from './canvas-figure.interface.js';
+import { CanvasFigure } from './canvas-figure.abstraction.js';
 
 /**
  * @typedef {{ x: number, y: number}} Coordinate
@@ -23,8 +23,8 @@ import { CanvasFigure } from './canvas-figure.interface.js';
  */
 
 /**
- * Интерфейс для всех фигур на холсте
- * @interface
+ * Абстрактный класс для всех геометрических фигур на холсте
+ * @abstract
  */
 export class Shape extends CanvasFigure {
   /**

@@ -1,6 +1,6 @@
 /**
- * Интерфейс для управления UI
- * @interface
+ * Абстрактный класс для управления UI
+ * @abstract
  */
 export class UIManager {
   /**

@@ -1,4 +1,4 @@
-import { BasePlugin } from '../interfaces/base-plugin.interface.js';
+import { BasePlugin } from '../abstractions/base-plugin.abstraction.js';
 
 /**
  * Абстрактный класс для всех плагинов

@@ -1,4 +1,4 @@
-import { ConnectionGenerator } from '../interfaces/connection-generator.interface.js';
+import { ConnectionGenerator } from '../abstractions/connection-generator.abstraction.js';
 
 /**
  * Реализация генератора соединений

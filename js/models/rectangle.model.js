@@ -1,4 +1,4 @@
-import { Shape } from '../interfaces/shape.interface.js';
+import { Shape } from '../abstractions/shape.abstraction.js';
 
 /**
  * Модель параметров для класса {@link Rectangle}
