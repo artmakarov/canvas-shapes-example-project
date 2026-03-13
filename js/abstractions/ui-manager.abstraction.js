@@ -1,8 +1,8 @@
 /**
  * Снимок состояния приложения
  * @typedef {Object} AppStateSnapshot
- * @property {Shape[]} shapes
- * @property {Shape[]} selectedShapes
+ * @property {ReadonlyArray<Readonly<Shape>>} shapes
+ * @property {ReadonlyArray<Readonly<Shape>>} selectedShapes
  */
 
 /**
