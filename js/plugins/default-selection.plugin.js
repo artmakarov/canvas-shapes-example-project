@@ -6,17 +6,14 @@ import { Plugin } from '../abstractions/plugin.abstraction.js';
 export class DefaultSelectionPlugin extends Plugin {
   /** @param {PointerEvent} event */
   canvasClickHandler = (event) => {
-    const rect = this.app.renderer.canvas.getBoundingClientRect();
+    const rect = this.app.canvas.getBoundingClientRect();
     const coordinate = {
       x: event.clientX - rect.left,
       y: event.clientY - rect.top,
     };
+    const shape = this.app.getShapeAtPoint(coordinate);
 
-    this.app.shapeManager.selectedShape =
-      this.app.shapeManager.getShapeAtPoint(coordinate);
-
-    this.app.render();
-    this.app.updateUI();
+    this.app.setSelectedShape(shape);
   }
 
   /** @return {string} */
@@ -26,11 +23,11 @@ export class DefaultSelectionPlugin extends Plugin {
 
   /** @return {void} */
   onInit() {
-    this.app.renderer.canvas.addEventListener('click', this.canvasClickHandler);
+    this.app.canvas.addEventListener('click', this.canvasClickHandler);
   }
 
   /** @return {void} */
   onDestroy() {
-    this.app.renderer.canvas.removeEventListener('click', this.canvasClickHandler)
+    this.app.canvas.removeEventListener('click', this.canvasClickHandler)
   }
 }

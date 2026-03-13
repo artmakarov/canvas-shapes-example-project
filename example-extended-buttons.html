@@ -45,28 +45,22 @@
   import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.2.0';
   import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.2.0';
   import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=0.2.0';
-  import { CanvasShapeManagerExtended } from './js/managers/canvas-shape-extended.manager.js?v=0.2.0';
+  import { CanvasShapeManager } from './js/managers/canvas-shape.manager.js?v=0.2.0';
   import { CanvasButtonManager } from './js/managers/canvas-button.manager.js?v=0.2.0';
   import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.2.0';
   import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.2.0';
 
-  const rectangleFactory = new RectangleFactory(new ContrastColorPalette());
-  const shapeManager = new CanvasShapeManagerExtended();
-  const connectionFactory = new ArrowConnectionFactory();
-  const connectionGenerator = new SmartConnectionGenerator();
   const buttonManager = new CanvasButtonManager();
-  const uiManager = new CanvasUIManager(buttonManager);
-  const renderer = new Canvas2DRenderer(
-    document.getElementById('canvasWrapper'),
-    document.getElementById('canvas'),
-  );
   const application = new CanvasApp({
-    shapeManager,
-    connectionFactory,
-    connectionGenerator,
     buttonManager,
-    uiManager,
-    renderer,
+    shapeManager: new CanvasShapeManager(),
+    uiManager: new CanvasUIManager(buttonManager),
+    connectionFactory: new ArrowConnectionFactory(),
+    connectionGenerator: new SmartConnectionGenerator(),
+    renderer: new Canvas2DRenderer(
+      document.getElementById('canvasWrapper'),
+      document.getElementById('canvas'),
+    ),
   });
 
   application.setButtons((app) => /** @type ButtonConfig[] */ [
@@ -74,17 +68,7 @@
       id: 'addBtn',
       text: 'Add',
       className: 'button_success',
-      action: () => {
-        const shape = rectangleFactory.createShape({
-          id: shapeManager.nextShapeId,
-          canvasWidth: renderer.canvas.width,
-          canvasHeight: renderer.canvas.height,
-        });
-
-        shapeManager.addShape(shape);
-        app.render();
-        app.updateUI();
-      },
+      action: () => app.addShapes([new RectangleFactory(new ContrastColorPalette())]),
     },
     {
       id: 'deleteBtn',
@@ -92,14 +76,12 @@
       className: 'button_danger',
       isDisabled: ({ selectedShape }) => !selectedShape,
       action: () => {
-        const { selectedShape } = shapeManager;
+        const selectedShape = app.getSelectedShape();
 
         if (!selectedShape) return;
 
-        shapeManager.selectedShape = null;
-        shapeManager.removeShape(selectedShape);
-        app.render();
-        app.updateUI();
+        app.setSelectedShape(null);
+        app.removeShapes([selectedShape]);
       },
     },
     {
@@ -107,11 +89,7 @@
       text: 'Clear',
       className: 'button_secondary',
       isDisabled: ({ shapeCount }) => !shapeCount,
-      action: () => {
-        shapeManager.clear();
-        app.render();
-        app.updateUI();
-      },
+      action: () => app.clearShapes(),
     },
 
     // Новые кнопки
@@ -121,9 +99,16 @@
       className: 'button_warning',
       isDisabled: ({ shapeCount }) => !shapeCount,
       action: () => {
-        shapeManager.randomizeShapes(renderer.canvasWrapper);
+        const shapes = app.getAllShapes()
+        const maxWidth = app.canvas.clientWidth - /* ширина прямоугольника */ 140;
+        const maxHeight = app.canvas.clientHeight - /* высота прямоугольника */ 40;
+
+        shapes.forEach((shape) => {
+          shape.x = Math.random() * maxWidth;
+          shape.y = Math.random() * maxHeight;
+        });
+
         app.render();
-        app.updateUI();
       },
     },
     {
@@ -131,13 +116,15 @@
       text: 'Reset',
       className: 'button_secondary',
       action: () => {
-        shapeManager.resetShapes({
-          canvasWidth: renderer.canvas.width,
-          canvasHeight: renderer.canvas.height,
-          shapeFactory: new RectangleFactory(new ColorPalette()),
-        });
-        app.render();
-        app.updateUI();
+        app.clearShapes();
+        // Создаем 5 фигур
+        app.addShapes([
+          new RectangleFactory(new ColorPalette()),
+          new RectangleFactory(new ContrastColorPalette()),
+          new RectangleFactory(new ColorPalette()),
+          new RectangleFactory(new ContrastColorPalette()),
+          new RectangleFactory(new ColorPalette()),
+        ]);
       },
     },
     {

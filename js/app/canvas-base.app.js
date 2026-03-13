@@ -24,7 +24,6 @@ export class CanvasAppBase {
     this._connectionFactory = config.connectionFactory;
 
     /**
-     *
      * @type {ConnectionGenerator}
      * @protected
      */
@@ -61,20 +60,34 @@ export class CanvasAppBase {
     this._pluginManager = new PluginManager(this);
   }
 
-
-  /** @return {ShapeManager} */
-  get shapeManager() {
-    return this._shapeManager;
+  /** @return {HTMLCanvasElement} */
+  get canvas() {
+    return this._renderer.canvas;
   }
 
-  /** @return {UIManager} */
-  get uiManager() {
-    return this._uiManager;
+  /** @param {ConnectionFactory} connectionFactory */
+  setConnectionFactory(connectionFactory) {
+    this._connectionFactory = connectionFactory;
   }
 
-  /** @return {CanvasRenderer} */
-  get renderer() {
-    return this._renderer;
+  /** @param {ConnectionGenerator} connectionGenerator */
+  setConnectionGenerator(connectionGenerator) {
+    this._connectionGenerator = connectionGenerator;
+  }
+
+  /** @param {ShapeManager} shapeManager */
+  setShapeManager(shapeManager) {
+    this._shapeManager = shapeManager;
+  }
+
+  /** @param {ButtonManager} buttonManager */
+  setButtonManager(buttonManager) {
+    this._buttonManager = buttonManager;
+  }
+
+  /** @param {CanvasRenderer} renderer */
+  setRenderer(renderer) {
+    this._renderer = renderer;
   }
 
   /** @return {AppStateSnapshot} */
@@ -102,29 +115,97 @@ export class CanvasAppBase {
     this._uiManager.update(stateSnapshot);
   }
 
-  /** @param {ConnectionFactory} connectionFactory */
-  setConnectionFactory(connectionFactory) {
-    this._connectionFactory = connectionFactory;
+  /**
+   * Добавляет геометрические фигуры через фабрики
+   * @param {ShapeFactory[]} shapeFactories
+   * @return {Shape[]}
+   */
+  addShapes(shapeFactories) {
+    /** @type {Shape[]} */
+    const shapes = [];
+
+    for (const shapeFactory of shapeFactories) {
+      const shape = shapeFactory.createShape({
+        id: this._shapeManager.nextShapeId,
+        canvasWidth: this._renderer.canvas.width,
+        canvasHeight: this._renderer.canvas.height,
+      });
+
+      this._shapeManager.addShape(shape);
+      shapes.push(shape);
+    }
+
+    this.render();
+    this.updateUI();
+
+    return shapes;
   }
 
-  /** @param {ConnectionGenerator} connectionGenerator */
-  setConnectionGenerator(connectionGenerator) {
-    this._connectionGenerator = connectionGenerator;
+  /**
+   * Удаляет геометрические фигуры
+   * @param {Shape[]} shapes
+   * @return {boolean}
+   */
+  removeShapes(shapes) {
+    if (!shapes.length) {
+      return false;
+    }
+
+    for (const shape of shapes) {
+      this._shapeManager.removeShape(shape);
+    }
+
+    this.render();
+    this.updateUI();
+
+    return true;
   }
 
-  /** @param {ShapeManager} shapeManager */
-  setShapeManager(shapeManager) {
-    this._shapeManager = shapeManager;
+  /**
+   * Удаляет все геометрические фигуры
+   * @return {void}
+   */
+  clearShapes() {
+    this._shapeManager.clear();
+    this.render();
+    this.updateUI();
   }
 
-  /** @param {ButtonManager} buttonManager */
-  setButtonManager(buttonManager) {
-    this._buttonManager = buttonManager;
+  /**
+   * Возвращает все геометрические фигуры
+   * @return {Shape[]}
+   */
+  getAllShapes() {
+    return this._shapeManager.getAllShapes();
   }
 
-  /** @param {CanvasRenderer} renderer */
-  setRenderer(renderer) {
-    this._renderer = renderer;
+  /**
+   * Возвращает геометрическую фигуру в координате
+   * @param {Coordinate} coordinate
+   * @return {Shape|null}
+   */
+  getShapeAtPoint(coordinate) {
+    return this._shapeManager.getShapeAtPoint(coordinate);
+  }
+
+  /**
+   * Возвращает выбранную фигуру
+   * @return {Shape|null}
+   */
+  getSelectedShape() {
+    return this._shapeManager.selectedShape
+  }
+
+  /**
+   * Устанавливает выбранную фигуру
+   * @param {Shape|null} shape
+   * @return {void}
+   */
+  setSelectedShape(shape) {
+    this._shapeManager.selectedShape = shape;
+
+    this.render();
+    this.updateUI();
   }
 
   /**
