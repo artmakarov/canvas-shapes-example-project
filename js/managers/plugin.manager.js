@@ -2,7 +2,7 @@
  * Менеджер плагинов для приложения
  */
 export class PluginManager {
-  /** @param {CanvasAppBase} app */
+  /** @param {CanvasBaseApp} app */
   constructor(app) {
     /**
      * @type {Map<string, Plugin>}
@@ -11,7 +11,7 @@ export class PluginManager {
     this._plugins = new Map();
 
     /**
-     * @type {CanvasAppBase}
+     * @type {CanvasBaseApp}
      * @protected
      */
     this._app = app;

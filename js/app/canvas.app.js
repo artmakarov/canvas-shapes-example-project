@@ -1,20 +1,20 @@
-import { CanvasAppBase } from './canvas-base.app.js';
+import { CanvasBaseApp } from './canvas-base.app.js';
 
 /**
  * Модель конфигурации для класса {@link CanvasApp}
  * @typedef {Object} CanvasAppConfig
  * @property {ConnectionFactory} connectionFactory
  * @property {ConnectionGenerator} connectionGenerator
- * @property {ShapeManager} shapeManager
- * @property {ButtonManager} buttonManager
- * @property {UIManager} uiManager
- * @property {CanvasRenderer} renderer
+ * @property {BaseShapeManager} shapeManager
+ * @property {BaseButtonUIManager} buttonManager
+ * @property {BaseAppUIManager} uiManager
+ * @property {Renderer} renderer
  */
 
 /**
  * Главный класс приложения
  */
-export class CanvasApp extends CanvasAppBase {
+export class CanvasApp extends CanvasBaseApp {
   /** @param {CanvasAppConfig} config */
   constructor(config) {
     super(config);

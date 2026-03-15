@@ -1,21 +1,21 @@
 import { PluginManager } from '../managers/plugin.manager.js';
 
 /**
- * Модель конфигурации для класса {@link CanvasAppBase}
- * @typedef {Object} CanvasAppBaseConfig
+ * Модель конфигурации для класса {@link CanvasBaseApp}
+ * @typedef {Object} CanvasBaseAppConfig
  * @property {ConnectionFactory} connectionFactory
  * @property {ConnectionGenerator} connectionGenerator
- * @property {ShapeManager} shapeManager
- * @property {ButtonManager} buttonManager
- * @property {UIManager} uiManager
- * @property {CanvasRenderer} renderer
+ * @property {BaseShapeManager} shapeManager
+ * @property {BaseButtonUIManager} buttonManager
+ * @property {BaseAppUIManager} uiManager
+ * @property {Renderer} renderer
  */
 
 /**
  * Базовый класс приложения
  */
-export class CanvasAppBase {
-  /** @param {CanvasAppBaseConfig} config */
+export class CanvasBaseApp {
+  /** @param {CanvasBaseAppConfig} config */
   constructor(config) {
     /**
      * @type {ConnectionFactory}
@@ -30,25 +30,25 @@ export class CanvasAppBase {
     this._connectionGenerator = config.connectionGenerator;
 
     /**
-     * @type {ShapeManager}
+     * @type {BaseShapeManager}
      * @protected
      */
     this._shapeManager = config.shapeManager;
 
     /**
-     * @type {ButtonManager}
+     * @type {BaseButtonUIManager}
      * @protected
      */
     this._buttonManager = config.buttonManager;
 
     /**
-     * @type {UIManager}
+     * @type {BaseAppUIManager}
      * @protected
      */
     this._uiManager = config.uiManager;
 
     /**
-     * @type {CanvasRenderer}
+     * @type {Renderer}
      * @protected
      */
     this._renderer = config.renderer;
@@ -75,17 +75,17 @@ export class CanvasAppBase {
     this._connectionGenerator = connectionGenerator;
   }
 
-  /** @param {ShapeManager} shapeManager */
+  /** @param {BaseShapeManager} shapeManager */
   setShapeManager(shapeManager) {
     this._shapeManager = shapeManager;
   }
 
-  /** @param {ButtonManager} buttonManager */
+  /** @param {BaseButtonUIManager} buttonManager */
   setButtonManager(buttonManager) {
     this._buttonManager = buttonManager;
   }
 
-  /** @param {CanvasRenderer} renderer */
+  /** @param {Renderer} renderer */
   setRenderer(renderer) {
     this._renderer = renderer;
   }
@@ -113,7 +113,16 @@ export class CanvasAppBase {
   updateUI() {
     const stateSnapshot = this.getStateSnapshot();
 
-    this._uiManager.update(stateSnapshot);
+    this._uiManager.updateUI(stateSnapshot);
+  }
+
+  /**
+   * Добавляет функцию обратного вызова при обновлении UI
+   * @param {UpdateUICallback} callback
+   * @return {RemoveUpdateUICallback}
+   */
+  onUpdateUI(callback) {
+    return this._uiManager.onUpdateUI(callback);
   }
 
   /**
@@ -194,7 +203,7 @@ export class CanvasAppBase {
    * @return {Shape[]}
    */
   getSelectedShapes() {
-    return this._shapeManager.selectedShapes
+    return this._shapeManager.selectedShapes;
   }
 
   /**
@@ -220,6 +229,11 @@ export class CanvasAppBase {
     this.updateUI();
 
     return this;
+  }
+
+  /** @return {void} */
+  resize() {
+    this._renderer.resize();
   }
 
   /**

@@ -5,7 +5,7 @@ import { Plugin } from '../abstractions/plugin.abstraction.js';
  */
 export class DefaultResizePlugin extends Plugin {
   resizeHandler = () => {
-    this.app.renderer.resize();
+    this.app.resize();
     this.app.render();
   }
 

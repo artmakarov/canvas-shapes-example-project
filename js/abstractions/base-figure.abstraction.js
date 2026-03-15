@@ -2,7 +2,7 @@
  * Абстрактный класс для всех фигур на холсте
  * @abstract
  */
-export class CanvasFigure {
+export class BaseFigure {
   /**
    * @abstract
    * @param {RenderingContext} ctx

@@ -26,7 +26,7 @@
     </ul>
 </div>
 
-<div class="toolbar">
+<div id="toolbar" class="toolbar">
     <!-- Кнопки будут созданы динамически -->
 </div>
 
@@ -34,7 +34,7 @@
     <canvas id="canvas"></canvas>
 
     <div id="info" class="info">
-        Кликните Add для создания фигур. Кликните на фигуру для выбора.
+        <!-- Информация будет создана динамически -->
     </div>
 </div>
 
@@ -45,18 +45,20 @@
   import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.2.0';
   import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.2.0';
   import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=0.2.0';
-  import { CanvasShapeManager } from './js/managers/canvas-shape.manager.js?v=0.2.0';
-  import { CanvasButtonManager } from './js/managers/canvas-button.manager.js?v=0.2.0';
-  import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.2.0';
+  import { ShapeManager } from './js/managers/shape.manager.js?v=0.2.0';
+  import { ButtonManager } from './js/managers/button.manager.js?v=0.2.0';
+  import { UIManager } from './js/managers/ui.manager.js?v=0.2.0';
   import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.2.0';
   import { DefaultResizePlugin } from './js/plugins/default-resize.plugin.js?v=0.2.0';
   import { DefaultSelectionPlugin } from './js/plugins/default-selection.plugin.js?v=0.2.0';
 
-  const buttonManager = new CanvasButtonManager();
+  const infoContainer = document.querySelector('#info');
+  const toolbarContainer = document.querySelector('#toolbar');
+  const buttonManager = new ButtonManager(toolbarContainer);
   const application = new CanvasApp({
     buttonManager,
-    shapeManager: new CanvasShapeManager(),
-    uiManager: new CanvasUIManager(buttonManager),
+    shapeManager: new ShapeManager(),
+    uiManager: new UIManager({ buttonManager }),
     connectionFactory: new ArrowConnectionFactory(),
     connectionGenerator: new SmartConnectionGenerator(),
     renderer: new Canvas2DRenderer(
@@ -69,6 +71,16 @@
     new DefaultResizePlugin(),
     new DefaultSelectionPlugin(),
   ])
+
+  application.onUpdateUI((appStateSnapshot) => {
+    const { selectedShapes, shapes } = appStateSnapshot;
+
+    if (!infoContainer) return;
+
+    infoContainer.textContent = selectedShapes.length
+      ? `Выбрано: ${selectedShapes.map((shape) => shape.name)}`
+      : `Фигур: ${shapes.length}. Кликните Add для создания.`;
+  })
 
   application.setButtons((app) => /** @type ButtonConfig[] */ [
     {

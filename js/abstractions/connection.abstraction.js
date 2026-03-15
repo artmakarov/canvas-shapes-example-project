@@ -1,4 +1,4 @@
-import { CanvasFigure } from './canvas-figure.abstraction.js';
+import { BaseFigure } from './base-figure.abstraction.js';
 
 /**
  * Модель параметров для класса {@link Connection}
@@ -15,7 +15,7 @@ import { CanvasFigure } from './canvas-figure.abstraction.js';
  * Абстрактный класс для всех типов соединений между фигурами
  * @abstract
  */
-export class Connection extends CanvasFigure {
+export class Connection extends BaseFigure {
   /**
    * @param {ConnectionProperties} properties
    */

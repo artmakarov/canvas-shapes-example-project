@@ -1,7 +1,7 @@
-import { ShapeManager } from '../abstractions/shape-manager.abstraction.js';
+import { BaseShapeManager } from '../abstractions/base-shape-manager.abstraction.js';
 
 /** Реализация менеджера фигур */
-export class CanvasShapeManager extends ShapeManager {
+export class ShapeManager extends BaseShapeManager {
   constructor() {
     super();
 

@@ -9,13 +9,13 @@
  * Абстрактный класс для управления UI
  * @abstract
  */
-export class UIManager {
+export class BaseUIManager {
   /**
    * @abstract
    * @param {AppStateSnapshot} appStateSnapshot
    * @return {void}
    */
-  update(appStateSnapshot) {
-    throw new Error('Метод update должен быть реализован подклассом!');
+  updateUI(appStateSnapshot) {
+    throw new Error('Метод updateUI должен быть реализован подклассом!');
   }
 }
