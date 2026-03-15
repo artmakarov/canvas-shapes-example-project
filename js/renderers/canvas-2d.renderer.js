@@ -1,9 +1,9 @@
-import { CanvasRenderer } from '../interfaces/canvas-renderer.interface.js';
+import { Renderer } from '../abstractions/renderer.abstraction.js';
 
 /**
  * Реализация рендерера холста
  */
-export class Canvas2DRenderer extends CanvasRenderer {
+export class Canvas2DRenderer extends Renderer {
   /**
    * @param {HTMLElement} canvasWrapper
    * @param {HTMLCanvasElement} canvas
@@ -42,7 +42,7 @@ export class Canvas2DRenderer extends CanvasRenderer {
   render(shapes, connections) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    shapes.forEach((shape) => shape.draw(this.ctx));
     connections.forEach((connection) => connection.draw(this.ctx));
+    shapes.forEach((shape) => shape.draw(this.ctx));
   }
 }

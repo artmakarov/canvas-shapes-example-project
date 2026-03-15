@@ -1,3 +1,5 @@
+import { BaseUIManager } from './base-ui-manager.abstraction.js';
+
 /**
  * Конфигурация кнопки
  * @typedef {Object} ButtonConfig
@@ -5,15 +7,15 @@
  * @property {string} text - Текст кнопки
  * @property {string} className - CSS классы кнопки
  * @property {(e: PointerEvent) => void} action - Функция действия кнопки
- * @property {(shapeCount: number, selectedShape: Shape|null) => boolean} [isDisabled] - Функция
+ * @property {(appStateSnapshot: AppStateSnapshot) => boolean} [isDisabled] - Функция
  *   проверки недоступности кнопки
  */
 
 /**
- * Интерфейс для управления кнопками
- * @interface
+ * Абстрактный класс для управления кнопками
+ * @abstract
  */
-export class ButtonManager {
+export class BaseButtonUIManager extends BaseUIManager {
   /**
    * @abstract
    * @param {ButtonConfig[]} buttonConfigs
@@ -21,15 +23,5 @@ export class ButtonManager {
    */
   setButtons(buttonConfigs) {
     throw new Error('Метод setButtons должен быть реализован подклассом!');
-  }
-
-  /**
-   * @abstract
-   * @param {number} shapeCount
-   * @param {Shape|null} selectedShape
-   * @return {void}
-   */
-  updateUI(shapeCount, selectedShape) {
-    throw new Error('Метод updateUI должен быть реализован подклассом!');
   }
 }

@@ -1,3 +1,5 @@
+import { BaseFigure } from './base-figure.abstraction.js';
+
 /**
  * Модель параметров для класса {@link Connection}
  * @typedef {Object} ConnectionProperties
@@ -10,14 +12,16 @@
  */
 
 /**
- * Интерфейс для всех типов соединений между фигурами
- * @interface
+ * Абстрактный класс для всех типов соединений между фигурами
+ * @abstract
  */
-export class Connection {
+export class Connection extends BaseFigure {
   /**
    * @param {ConnectionProperties} properties
    */
   constructor(properties) {
+    super();
+
     const { startX, startY, endX, endY, fromEdge, toEdge } = properties;
 
     this.startX = startX;
@@ -30,10 +34,10 @@ export class Connection {
 
   /**
    * @abstract
-   * @param {CanvasRenderingContext2D} ctx
+   * @param {RenderingContext} ctx
    * @return {void}
    */
   draw(ctx) {
-    throw new Error('Метод draw должен быть реализован подклассом!');
+    super.draw(ctx);
   }
 }

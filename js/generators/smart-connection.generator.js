@@ -1,4 +1,4 @@
-import { ConnectionGenerator } from '../interfaces/connection-generator.interface.js';
+import { ConnectionGenerator } from '../abstractions/connection-generator.abstraction.js';
 
 /**
  * Реализация генератора соединений
@@ -51,9 +51,9 @@ export class SmartConnectionGenerator extends ConnectionGenerator {
   }
 
   /**
-   * @param fromShape {Shape}
-   * @param toShape {Shape}
-   * @param usedEdges {Set<string>}
+   * @param {Shape} fromShape
+   * @param {Shape} toShape
+   * @param {Set<string>} usedEdges
    * @return {ConnectionProperties|null}
    */
   _findBestConnection(fromShape, toShape, usedEdges) {

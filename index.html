@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas Shapes</title>
-    <link rel="stylesheet" href="./styles/main.css?v=0.2.0">
+    <link rel="stylesheet" href="./styles/main.css?v=0.3.0">
 </head>
 
 <body>
@@ -12,7 +12,7 @@
     <a href="./example-extended-buttons.html">example-extended-buttons.html</a>
 </div>
 
-<div class="toolbar">
+<div id="toolbar" class="toolbar">
     <!-- Кнопки будут созданы динамически -->
 </div>
 
@@ -20,81 +20,80 @@
     <canvas id="canvas"></canvas>
 
     <div id="info" class="info">
-        Кликните Add для создания фигур. Кликните на фигуру для выбора.
+        <!-- Информация будет создана динамически -->
     </div>
 </div>
 
 <script type="module">
-  import { CanvasApp } from './js/app/canvas.app.js?v=0.2.0';
-  import { ColorPalette } from './js/models/color-palette.model.js?v=0.2.0';
-  import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.2.0';
-  import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.2.0';
-  import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=0.2.0';
-  import { CanvasShapeManager } from './js/managers/canvas-shape.manager.js?v=0.2.0';
-  import { CanvasButtonManager } from './js/managers/canvas-button.manager.js?v=0.2.0';
-  import { CanvasUIManager } from './js/managers/canvas-ui.manager.js?v=0.2.0';
-  import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.2.0';
+  import { CanvasApp } from './js/app/canvas.app.js?v=0.3.0';
+  import { ColorPalette } from './js/models/color-palette.model.js?v=0.3.0';
+  import { RectangleFactory } from './js/factories/rectangle.factory.js?v=0.3.0';
+  import { ArrowConnectionFactory } from './js/factories/arrow-connection.factory.js?v=0.3.0';
+  import { SmartConnectionGenerator } from './js/generators/smart-connection.generator.js?v=0.3.0';
+  import { ShapeManager } from './js/managers/shape.manager.js?v=0.3.0';
+  import { ButtonManager } from './js/managers/button.manager.js?v=0.3.0';
+  import { UIManager } from './js/managers/ui.manager.js?v=0.3.0';
+  import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.3.0';
+  import { DefaultResizePlugin } from './js/plugins/default-resize.plugin.js?v=0.3.0';
+  import { DefaultSelectionPlugin } from './js/plugins/default-selection.plugin.js?v=0.3.0';
 
-  const shapeFactory = new RectangleFactory(new ColorPalette());
-  const shapeManager = new CanvasShapeManager();
-  const connectionFactory = new ArrowConnectionFactory();
-  const connectionGenerator = new SmartConnectionGenerator();
-  const buttonManager = new CanvasButtonManager();
-  const uiManager = new CanvasUIManager(buttonManager);
-  const renderer = new Canvas2DRenderer(
-    document.getElementById('canvasWrapper'),
-    document.getElementById('canvas'),
-  );
+  const infoContainer = document.querySelector('#info');
+  const toolbarContainer = document.querySelector('#toolbar');
+  const buttonManager = new ButtonManager(toolbarContainer);
   const application = new CanvasApp({
-    shapeFactory,
-    shapeManager,
-    connectionFactory,
-    connectionGenerator,
     buttonManager,
-    uiManager,
-    renderer,
+    shapeManager: new ShapeManager(),
+    uiManager: new UIManager({ buttonManager }),
+    connectionFactory: new ArrowConnectionFactory(),
+    connectionGenerator: new SmartConnectionGenerator(),
+    renderer: new Canvas2DRenderer(
+      document.getElementById('canvasWrapper'),
+      document.getElementById('canvas'),
+    ),
   });
+
+  application.registerPlugins([
+    new DefaultResizePlugin(),
+    new DefaultSelectionPlugin(),
+  ])
+
+  application.onUpdateUI((appStateSnapshot) => {
+    const { selectedShapes, shapes } = appStateSnapshot;
+
+    if (!infoContainer) return;
+
+    infoContainer.textContent = selectedShapes.length
+      ? `Выбрано: ${selectedShapes.map((shape) => shape.name)}`
+      : `Фигур: ${shapes.length}. Кликните Add для создания.`;
+  })
 
   application.setButtons((app) => /** @type ButtonConfig[] */ [
     {
       id: 'addBtn',
       text: 'Add',
       className: 'button_success',
-      action: () => {
-        const shape = shapeFactory.createShape({
-          id: shapeManager.nextShapeId,
-          canvasWidth: renderer.canvas.width,
-          canvasHeight: renderer.canvas.height,
-        });
-
-        shapeManager.addShape(shape);
-        app.update();
-      },
+      action: () => app.addShapes([new RectangleFactory(new ColorPalette())]),
     },
     {
       id: 'deleteBtn',
       text: 'Delete',
       className: 'button_danger',
-      isDisabled: (shapeCount, selectedShape) => !selectedShape,
+      isDisabled: ({ selectedShapes }) => !selectedShapes.length,
       action: () => {
-        const { selectedShape } = shapeManager;
+        const selectedShapes = app.getSelectedShapes();
 
-        if (!selectedShape) return;
+        if (!selectedShapes.length) return;
 
-        shapeManager.selectedShape = null;
-        shapeManager.removeShape(selectedShape);
-        app.update();
+        app.setSelectedShapes([]);
+        app.removeShapes(selectedShapes);
       },
     },
     {
       id: 'clearBtn',
       text: 'Clear',
       className: 'button_secondary',
-      isDisabled: (shapeCount) => !shapeCount,
-      action: () => {
-        shapeManager.clear();
-        app.update();
-      },
+      isDisabled: ({ shapes }) => !shapes.length,
+      action: () => app.clearShapes(),
     },
   ]);
 
