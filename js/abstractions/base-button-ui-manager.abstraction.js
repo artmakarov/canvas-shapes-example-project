@@ -1,3 +1,5 @@
+import { BaseUIManager } from './base-ui-manager.abstraction.js';
+
 /**
  * Конфигурация кнопки
  * @typedef {Object} ButtonConfig
@@ -13,7 +15,7 @@
  * Абстрактный класс для управления кнопками
  * @abstract
  */
-export class ButtonManager {
+export class BaseButtonUIManager extends BaseUIManager {
   /**
    * @abstract
    * @param {ButtonConfig[]} buttonConfigs
@@ -21,14 +23,5 @@ export class ButtonManager {
    */
   setButtons(buttonConfigs) {
     throw new Error('Метод setButtons должен быть реализован подклассом!');
-  }
-
-  /**
-   * @abstract
-   * @param {AppStateSnapshot} appStateSnapshot
-   * @return {void}
-   */
-  updateUI(appStateSnapshot) {
-    throw new Error('Метод updateUI должен быть реализован подклассом!');
   }
 }

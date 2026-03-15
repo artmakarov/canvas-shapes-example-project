@@ -2,7 +2,7 @@
  * Абстрактный класс для управления фигурами
  * @abstract
  */
-export class ShapeManager {
+export class BaseShapeManager {
   /**
    * @abstract
    * @type {number}

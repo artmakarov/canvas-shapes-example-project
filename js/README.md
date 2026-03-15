@@ -5,17 +5,18 @@
 ## Структура
 
 ### abstractions/
-- `button-manager.abstraction.js` - Абстрактный класс менеджера кнопок
-- `canvas-figure.abstraction.js` - Абстрактный класс базовой фигуры
-- `canvas-renderer.abstraction.js` - Абстрактный класс рендерера
+- `base-app-ui-manager.abstraction.js` - Абстрактный класс UI менеджера приложения
+- `base-button-ui-manager.abstraction.js` - Абстрактный класс UI менеджера кнопок
+- `base-figure.abstraction.js` - Абстрактный класс базовой фигуры на холсте
+- `base-shape-manager.abstraction.js` - Абстрактный класс менеджера геометрических фигур
+- `base-ui-manager.abstraction.js` - Абстрактный базовый класс UI менеджера
 - `connection.abstraction.js` - Абстрактный класс соединения
 - `connection-factory.abstraction.js` - Абстрактный класс фабрики соединений
 - `connection-generator.abstraction.js` - Абстрактный класс генератора соединений
 - `plugin.abstraction.js` - Абстрактный класс плагина приложения
+- `renderer.abstraction.js` - Абстрактный класс рендерера
 - `shape.abstraction.js` - Абстрактный класс геометрической фигуры
 - `shape-factory.abstraction.js` - Абстрактный класс фабрики геометрических фигур
-- `shape-manager.abstraction.js` - Абстрактный класс менеджера геометрических фигур
-- `ui-manager.abstraction.js` - Абстрактный класс менеджера UI
 
 ### app/
 - `canvas.app.js` - Основное приложение для базового функционала
@@ -29,10 +30,10 @@
 - `smart-connection.generator.js` - Генератор "умных" соединений между геометрическими фигурами
 
 ### managers/
-- `canvas-button.manager.js` - Менеджер кнопок на холсте
-- `canvas-shape.manager.js` - Менеджер геометрических фигур
-- `canvas-ui.manager.js` - Менеджер UI элементов холста
-- `plugin.manager.js` - Менеджер плагинов
+- `button.manager.js` - UI Менеджер кнопок приложения
+- `plugin.manager.js` - Менеджер плагинов приложения
+- `shape.manager.js` - Менеджер геометрических фигур приложения
+- `ui.manager.js` - Менеджер UI элементов приложения
 
 ### models/
 - `arrow-connection.model.js` - Модель стрелочного соединения

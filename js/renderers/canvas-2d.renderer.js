@@ -1,9 +1,9 @@
-import { CanvasRenderer } from '../abstractions/canvas-renderer.abstraction.js';
+import { Renderer } from '../abstractions/renderer.abstraction.js';
 
 /**
  * Реализация рендерера холста
  */
-export class Canvas2DRenderer extends CanvasRenderer {
+export class Canvas2DRenderer extends Renderer {
   /**
    * @param {HTMLElement} canvasWrapper
    * @param {HTMLCanvasElement} canvas

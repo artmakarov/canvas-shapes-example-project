@@ -2,7 +2,7 @@
  * Абстрактный класс для рендеринга
  * @abstract
  */
-export class CanvasRenderer {
+export class Renderer {
   /** @param {HTMLCanvasElement} canvas */
   constructor(canvas) {
     this.canvas = canvas;

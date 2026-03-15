@@ -2,11 +2,13 @@
 
 Это JavaScript приложение на основе HTML5 Canvas для создания и управления геометрическими фигурами с автоматическими соединениями. 
 
-Проект разработан в рамках тестового задания на вакансию (native) JavaScript разработчика, с применением ООП, паттернов проектирования и соблюдением принципов SOLID.
+Проект разработан в рамках тестового задания на вакансию (native) JavaScript разработчика, с применением ООП, паттернов проектирования и соблюдением принципов SOLID. Далее развивается как pet-проект.
+
+
 
 Проект демонстрирует отличную реализацию современных подходов к разработке на чистом JavaScript без использования фреймворков.
 
-Демо:
+**Демо:**
 [artmakarov.github.io/canvas-shapes-example-project](https://artmakarov.github.io/canvas-shapes-example-project/)
 
 ## Структура проекта
@@ -15,30 +17,31 @@
 canvas-shapes-example-project/
 ├── js/                                             # JavaScript модули
 │   ├── abstractions/                               # Абстрактные классы и типы
-│   │   ├── button-manager.abstraction.js           # Абстрактный класс менеджера кнопок
-│   │   ├── canvas-figure.abstraction.js            # Абстрактный класс базовой фигуры
-│   │   ├── canvas-renderer.abstraction.js          # Абстрактный класс рендерера
+│   │   ├── base-app-ui-manager.abstraction.js      # Абстрактный класс UI менеджера приложения
+│   │   ├── base-button-ui-manager.abstraction.js   # Абстрактный класс UI менеджера кнопок
+│   │   ├── base-figure.abstraction.js              # Абстрактный класс базовой фигуры на холсте
+│   │   ├── base-shape-manager.abstraction.js       # Абстрактный класс менеджера геометрических фигур
+│   │   ├── base-ui-manager.abstraction.js          # Абстрактный базовый класс UI менеджера
 │   │   ├── connection.abstraction.js               # Абстрактный класс соединения
 │   │   ├── connection-factory.abstraction.js       # Абстрактный класс фабрики соединений
 │   │   ├── connection-generator.abstraction.js     # Абстрактный класс генератора соединений
 │   │   ├── plugin.abstraction.js                   # Абстрактный класс плагина приложения
+│   │   ├── renderer.abstraction.js                 # Абстрактный класс рендерера
 │   │   ├── shape.abstraction.js                    # Абстрактный класс геометрической фигуры
-│   │   ├── shape-factory.abstraction.js            # Абстрактный класс фабрики геометрических фигур
-│   │   ├── shape-manager.abstraction.js            # Абстрактный класс менеджера геометрических фигур
-│   │   └── ui-manager.abstraction.js               # Абстрактный класс менеджера UI
+│   │   └── shape-factory.abstraction.js            # Абстрактный класс фабрики геометрических фигур
 │   ├── app/                                        # Главные классы приложения
 │   │   ├── canvas.app.js                           # Основное приложение
-│   │   └── canvas-base.app.js                      # Базовый класс приложения
+│   │   └── canvas-base.app.js                      # Базовый класс приложения с поддержкой плагинов
 │   ├── factories/                                  # Фабрики для создания объектов
 │   │   ├── arrow-connection.factory.js             # Фабрика стрелочных соединений
 │   │   └── rectangle.factory.js                    # Фабрика прямоугольников
 │   ├── generators/                                 # Генераторы
 │   │   └── smart-connection.generator.js           # Генератор соединений
 │   ├── managers/                                   # Менеджеры компонентов
-│   │   ├── canvas-button.manager.js                # Менеджер кнопок
-│   │   ├── canvas-shape.manager.js                 # Менеджер геометрических фигур
-│   │   ├── canvas-ui.manager.js                    # Менеджер пользовательского интерфейса
-│   │   └── plugin.manager.js                       # Менеджер плагинов
+│   │   ├── button.manager.js                       # UI Менеджер кнопок
+│   │   ├── plugin.manager.js                       # Менеджер плагинов
+│   │   ├── shape.manager.js                        # Менеджер геометрических фигур
+│   │   └── ui.manager.js                           # Менеджер пользовательского интерфейса
 │   ├── models/                                     # Модели данных
 │   │   ├── arrow-connection.model.js               # Модель стрелочного соединения
 │   │   ├── color-palette.model.js                  # Цветовая палитра
@@ -104,20 +107,21 @@ canvas-shapes-example-project/
 ## Основные компоненты
 
 ### Абстрактные классы (abstractions/)
-- `CanvasFigure` - базовый абстрактный класс для всех фигур на холсте
-- `Shape` - абстрактный класс для геометрических фигур (наследуется от CanvasFigure)
-- `ShapeFactory` - абстрактный класс фабрики геометрических фигур
-- `ShapeManager` - абстрактный класс менеджера геометрических фигур
+- `BaseAppUIManager` - абстрактный класс UI менеджера приложения
+- `BaseButtonUIManager` - абстрактный класс UI менеджера кнопок
+- `BaseFigure` - базовый абстрактный класс для всех фигур на холсте
+- `BaseShapeManager` - абстрактный класс менеджера геометрических фигур
+- `BaseUIManager` - базовый абстрактный класс UI менеджера
 - `Connection` - абстрактный класс для соединений (наследуется от CanvasFigure)
 - `ConnectionFactory` - абстрактный класс фабрики соединений
 - `ConnectionGenerator` - абстрактный класс генератора соединений
-- `ButtonManager` - абстрактный класс менеджера кнопок
-- `UIManager` - абстрактный класс менеджера UI
-- `CanvasRenderer` - абстрактный класс рендерера
 - `Plugin` - абстрактный класс плагина приложения
+- `Renderer` - абстрактный класс рендерера
+- `Shape` - абстрактный класс для геометрических фигур (наследуется от CanvasFigure)
+- `ShapeFactory` - абстрактный класс фабрики геометрических фигур
 
 ### Приложение (app/)
-- `CanvasAppBase` - базовый класс для расширения
+- `CanvasBaseApp` - базовый класс приложения с поддержкой плагинов
 - `CanvasApp` - основное приложение
 
 ### Фигуры и модели (models/)
@@ -131,13 +135,13 @@ canvas-shapes-example-project/
 - `ArrowConnectionFactory` - создание стрелочных соединений
 
 ### Менеджеры (managers/)
-- `CanvasShapeManager` - жизненный цикл геометрических фигур
-- `CanvasButtonManager` - управление UI кнопками
-- `CanvasUIManager` - обновление состояния интерфейса
-- `PluginManager` - менеджер для управления жизненным циклом плагинов
+- `ButtonManager` - UI Менеджер кнопок
+- `PluginManager` - Менеджер плагинов
+- `ShapeManager` - Менеджер геометрических фигур
+- `UIManager` - Менеджер пользовательского интерфейса
 
 ### Рендеринг (renderers/)
-- `Canvas2DRenderer` - конкретная реализация с 2D Canvas API
+- `Canvas2DRenderer` - 2D Canvas рендерер
 
 ### Генераторы (generators/)
 - `SmartConnectionGenerator` - умное соединение между геометрическими фигурами
@@ -150,7 +154,7 @@ canvas-shapes-example-project/
 
 ### Утилиты (utils/)
 - `randomValueOnAxis` - генерация случайных координат
-- `index.js` - Централизованный экспорт всех утилитных функций
+- `index.js` - Централизованный экспорт всех утилит
 
 ## Функциональность
 

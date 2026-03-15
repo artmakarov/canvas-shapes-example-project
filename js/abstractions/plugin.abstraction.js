@@ -11,13 +11,13 @@ export class Plugin {
     this._isActive = false;
 
     /**
-     * @type {CanvasAppBase|null}
+     * @type {CanvasBaseApp|null}
      * @protected
      */
     this._app = null;
   }
 
-  /** @return {CanvasAppBase} */
+  /** @return {CanvasBaseApp} */
   get app() {
     if (!this._app) {
       throw new Error(`Плагин ${this.getName()} не инициализирован`);
@@ -40,7 +40,7 @@ export class Plugin {
   }
 
   /**
-   * @param {CanvasAppBase} app
+   * @param {CanvasBaseApp} app
    * @return {void}
    */
   init(app) {
