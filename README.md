@@ -2,11 +2,9 @@
 
 Это JavaScript приложение на основе HTML5 Canvas для создания и управления геометрическими фигурами с автоматическими соединениями. 
 
-Проект разработан в рамках тестового задания на вакансию (native) JavaScript разработчика, с применением ООП, паттернов проектирования и соблюдением принципов SOLID. Далее развивается как pet-проект.
+Проект разработан в рамках тестового задания и для демонстрации навыков разработки на чистом (Vanilla) JavaScript, с применением ООП, паттернов проектирования и соблюдением принципов SOLID.
 
-
-
-Проект демонстрирует отличную реализацию современных подходов к разработке на чистом JavaScript без использования фреймворков.
+**_Далее развивается как pet-проект._**
 
 **Демо:**
 [artmakarov.github.io/canvas-shapes-example-project](https://artmakarov.github.io/canvas-shapes-example-project/)
@@ -17,7 +15,6 @@
 canvas-shapes-example-project/
 ├── js/                                             # JavaScript модули
 │   ├── abstractions/                               # Абстрактные классы и типы
-│   │   ├── base-app-ui-manager.abstraction.js      # Абстрактный класс UI менеджера приложения
 │   │   ├── base-button-ui-manager.abstraction.js   # Абстрактный класс UI менеджера кнопок
 │   │   ├── base-figure.abstraction.js              # Абстрактный класс базовой фигуры на холсте
 │   │   ├── base-shape-manager.abstraction.js       # Абстрактный класс менеджера геометрических фигур
@@ -39,6 +36,7 @@ canvas-shapes-example-project/
 │   │   └── smart-connection.generator.js           # Генератор соединений
 │   ├── managers/                                   # Менеджеры компонентов
 │   │   ├── button.manager.js                       # UI Менеджер кнопок
+│   │   ├── event.manager.js                        # Менеджер событий
 │   │   ├── plugin.manager.js                       # Менеджер плагинов
 │   │   ├── shape.manager.js                        # Менеджер геометрических фигур
 │   │   └── ui.manager.js                           # Менеджер пользовательского интерфейса
@@ -54,6 +52,7 @@ canvas-shapes-example-project/
 │   ├── renderers/                                  # Рендереры
 │   │   └── canvas-2d.renderer.js                   # 2D Canvas рендерер
 │   └── utils/                                      # Утилиты
+│       ├── event-types.js                          # Типы событий приложения
 │       └── index.js                                # Централизованный экспорт всех утилит
 ├── styles/                                         # CSS стили
 │   ├── main.css                                    # Основные стили
@@ -98,6 +97,10 @@ canvas-shapes-example-project/
 - `ShapeFactory` и `ConnectionFactory` для создания объектов
 - Легко расширяется новыми типами геометрических фигур или стилями соединений
 
+#### 3. Паттерн Одиночка
+- `EventManager` для управления событиями приложения
+- Один экземпляр в системе, глобальная точка доступа
+
 #### 3. Паттерн Менеджер
 - `ShapeManager`, `ButtonManager`, `UIManager` для управления компонентами
 - Чистое разделение ответственности
@@ -111,7 +114,6 @@ canvas-shapes-example-project/
 ## Основные компоненты
 
 ### Абстрактные классы (abstractions/)
-- `BaseAppUIManager` - абстрактный класс UI менеджера приложения
 - `BaseButtonUIManager` - абстрактный класс UI менеджера кнопок
 - `BaseFigure` - базовый абстрактный класс для всех фигур на холсте
 - `BaseShapeManager` - абстрактный класс менеджера геометрических фигур
@@ -140,6 +142,7 @@ canvas-shapes-example-project/
 
 ### Менеджеры (managers/)
 - `ButtonManager` - UI Менеджер кнопок
+- `EventManager` - Менеджер событий
 - `PluginManager` - Менеджер плагинов
 - `ShapeManager` - Менеджер геометрических фигур
 - `UIManager` - Менеджер пользовательского интерфейса
@@ -303,8 +306,6 @@ export class MyCustomPlugin extends Plugin {
 
 Артем Макаров ([artmakarov](https://github.com/artmakarov))\
 _Март 2026_
-
-_Разработано в рамках тестового задания и для демонстрации навыков разработки на чистом (native) JavaScript._
 
 ## Лицензия
 

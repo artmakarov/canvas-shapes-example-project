@@ -7,7 +7,7 @@ import { CanvasBaseApp } from './canvas-base.app.js';
  * @property {ConnectionGenerator} connectionGenerator
  * @property {BaseShapeManager} shapeManager
  * @property {BaseButtonUIManager} buttonManager
- * @property {BaseAppUIManager} uiManager
+ * @property {BaseUIManager} uiManager
  * @property {Renderer} renderer
  */
 
