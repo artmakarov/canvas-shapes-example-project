@@ -1,4 +1,4 @@
-import { BaseAppUIManager } from '../abstractions/base-app-ui-manager.abstraction.js';
+import { BaseUIManager } from '../abstractions/base-ui-manager.abstraction.js';
 
 /**
  * @typedef {Object} UIManagerOptions
@@ -6,28 +6,12 @@ import { BaseAppUIManager } from '../abstractions/base-app-ui-manager.abstractio
  */
 
 /**  Реализация менеджера UI */
-export class UIManager extends BaseAppUIManager {
+export class UIManager extends BaseUIManager {
   /** @param {UIManagerOptions} options */
   constructor(options) {
     super();
 
-    /** @type {UpdateUICallback[]} */
-    this.updateUICallbacks = [];
-
     this.buttonManager = options.buttonManager;
-  }
-
-  /**
-   * Добавляет функцию обратного вызова при обновлении UI
-   * @param {UpdateUICallback} callback
-   * @return {RemoveUpdateUICallback}
-   */
-  onUpdateUI(callback) {
-    this.updateUICallbacks.push(callback);
-
-    return () => {
-      this.updateUICallbacks.splice(this.updateUICallbacks.indexOf(callback), 1);
-    }
   }
 
   /**
@@ -36,13 +20,5 @@ export class UIManager extends BaseAppUIManager {
    */
   updateUI(appStateSnapshot) {
     this.buttonManager.updateUI(appStateSnapshot);
-
-    for (const callback of this.updateUICallbacks) {
-      try {
-        callback(appStateSnapshot);
-      } catch (error) {
-        console.error(`Ошибка при вызове callback обновления UI:`, error);
-      }
-    }
   }
 }

@@ -1,3 +1,5 @@
+export * from './event-types.js';
+
 /**
  * @param {number} max - Максимальное значение оси
  * @param {number} size - Размер фигуры

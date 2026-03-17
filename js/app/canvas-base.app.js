@@ -1,4 +1,6 @@
 import { PluginManager } from '../managers/plugin.manager.js';
+import { EventManager } from '../managers/event.manager.js';
+import { EventType } from '../utils/event-types.js';
 
 /**
  * Модель конфигурации для класса {@link CanvasBaseApp}
@@ -7,7 +9,7 @@ import { PluginManager } from '../managers/plugin.manager.js';
  * @property {ConnectionGenerator} connectionGenerator
  * @property {BaseShapeManager} shapeManager
  * @property {BaseButtonUIManager} buttonManager
- * @property {BaseAppUIManager} uiManager
+ * @property {BaseUIManager} uiManager
  * @property {Renderer} renderer
  */
 
@@ -42,7 +44,7 @@ export class CanvasBaseApp {
     this._buttonManager = config.buttonManager;
 
     /**
-     * @type {BaseAppUIManager}
+     * @type {BaseUIManager}
      * @protected
      */
     this._uiManager = config.uiManager;
@@ -52,6 +54,12 @@ export class CanvasBaseApp {
      * @protected
      */
     this._renderer = config.renderer;
+
+    /**
+     * @type {EventManager}
+     * @protected
+     */
+    this._eventManager = EventManager.getInstance();
 
     /**
      * @type {PluginManager}
@@ -101,12 +109,67 @@ export class CanvasBaseApp {
     };
   }
 
+  /**
+   * Подписка на событие
+   * @template T
+   * @param {InjectionEvent<T>|string} event
+   * @param {EventCallback<T>} callback
+   * @return {UnsubscribeFunction}
+   */
+  on(event, callback) {
+    return this._eventManager.on(event, callback);
+  }
+
+  /**
+   * Отписка от события
+   * @template T
+   * @param {InjectionEvent<T>|string} event
+   * @param {EventCallback<T>} callback
+   * @return {void}
+   */
+  off(event, callback) {
+    this._eventManager.off(event, callback);
+  }
+
+  /**
+   * Однократная подписка на событие
+   * @template T
+   * @param {InjectionEvent<T>|string} event
+   * @param {EventCallback<T>} callback
+   * @return {UnsubscribeFunction}
+   */
+  once(event, callback) {
+    return this._eventManager.once(event, callback);
+  }
+
+  /**
+   * Генерация события
+   * @template T
+   * @param {InjectionEvent<T>|string} event
+   * @param {T} [payload]
+   * @return {void}
+   */
+  emit(event, payload) {
+    this._eventManager.emit(event, payload);
+  }
+
+  /**
+   * Проверка наличия подписчиков
+   * @template T
+   * @param {InjectionEvent<T>|string} event
+   * @return {boolean}
+   */
+  hasListeners(event) {
+    return this._eventManager.hasListeners(event);
+  }
+
   /** @return {void} */
   render() {
     const shapes = this._shapeManager.getAllShapes();
     const connections = this._connectionGenerator.generateConnections(shapes, this._connectionFactory);
 
     this._renderer.render(shapes, connections);
+    this.emit(EventType.RENDER);
   }
 
   /** @return {void} */
@@ -114,15 +177,7 @@ export class CanvasBaseApp {
     const stateSnapshot = this.getStateSnapshot();
 
     this._uiManager.updateUI(stateSnapshot);
-  }
-
-  /**
-   * Добавляет функцию обратного вызова при обновлении UI
-   * @param {UpdateUICallback} callback
-   * @return {RemoveUpdateUICallback}
-   */
-  onUpdateUI(callback) {
-    return this._uiManager.onUpdateUI(callback);
+    this.emit(EventType.UI_UPDATE);
   }
 
   /**
@@ -142,6 +197,7 @@ export class CanvasBaseApp {
       });
 
       this._shapeManager.addShape(shape);
+      this.emit(EventType.SHAPE_ADDED, { shape });
       shapes.push(shape);
     }
 
@@ -163,6 +219,7 @@ export class CanvasBaseApp {
 
     for (const shape of shapes) {
       this._shapeManager.removeShape(shape);
+      this.emit(EventType.SHAPE_REMOVED, { shape });
     }
 
     this.render();
@@ -177,6 +234,7 @@ export class CanvasBaseApp {
    */
   clearShapes() {
     this._shapeManager.clear();
+    this.emit(EventType.SHAPES_CLEARED);
     this.render();
     this.updateUI();
   }
@@ -214,6 +272,7 @@ export class CanvasBaseApp {
   setSelectedShapes(shapes) {
     this._shapeManager.selectedShapes = shapes;
 
+    this.emit(EventType.SHAPES_SELECTED, { shapes });
     this.render();
     this.updateUI();
   }
@@ -234,6 +293,7 @@ export class CanvasBaseApp {
   /** @return {void} */
   resize() {
     this._renderer.resize();
+    this.emit(EventType.RESIZE);
   }
 
   /**

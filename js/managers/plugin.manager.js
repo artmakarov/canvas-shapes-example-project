@@ -1,3 +1,6 @@
+import { EventManager } from './event.manager.js';
+import { EventType } from '../utils/event-types.js';
+
 /**
  * Менеджер плагинов для приложения
  */
@@ -15,6 +18,12 @@ export class PluginManager {
      * @protected
      */
     this._app = app;
+
+    /**
+     * @type {EventManager}
+     * @protected
+     */
+    this._eventManager = EventManager.getInstance();
   }
 
   /**
@@ -101,15 +110,29 @@ export class PluginManager {
   }
 
   /**
+   * @template T
+   * @param {InjectionEvent<T>|string} event
+   * @param {T} [payload]
+   * @return {void}
+   * @protected
+   */
+  _emit(event, payload) {
+    this._eventManager.emit(event, payload);
+  }
+
+  /**
    * @param {Plugin} plugin
    * @return {void}
    * @private
    */
   _initPlugin(plugin) {
+    const pluginName = plugin.getName()
+
     try {
       plugin.init(this._app);
+      this._emit(EventType.PLUGIN_INIT, { pluginName })
     } catch (error) {
-      console.error(`Ошибка при инициализации плагина ${plugin.getName()}:`, error);
+      console.error(`Ошибка при инициализации плагина ${pluginName}:`, error);
     }
   }
 
@@ -119,10 +142,13 @@ export class PluginManager {
    * @private
    */
   _destroyPlugin(plugin) {
+    const pluginName = plugin.getName()
+
     try {
       plugin.destroy();
+      this._emit(EventType.PLUGIN_DESTROYED, { pluginName })
     } catch (error) {
-      console.error(`Ошибка при деинициализации плагина ${plugin.getName()}:`, error);
+      console.error(`Ошибка при деинициализации плагина ${pluginName}:`, error);
     }
   }
 }
