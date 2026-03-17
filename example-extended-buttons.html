@@ -51,6 +51,7 @@
   import { Canvas2DRenderer } from './js/renderers/canvas-2d.renderer.js?v=0.3.1';
   import { DefaultResizePlugin } from './js/plugins/default-resize.plugin.js?v=0.3.1';
   import { DefaultSelectionPlugin } from './js/plugins/default-selection.plugin.js?v=0.3.1';
+  import { EventType } from './js/utils/event-types.js?v=0.3.1';
 
   const infoContainer = document.querySelector('#info');
   const toolbarContainer = document.querySelector('#toolbar');
@@ -72,8 +73,8 @@
     new DefaultSelectionPlugin(),
   ])
 
-  application.onUpdateUI((appStateSnapshot) => {
-    const { selectedShapes, shapes } = appStateSnapshot;
+  application.on(EventType.UI_UPDATE, () => {
+    const { selectedShapes, shapes } = application.getStateSnapshot();
 
     if (!infoContainer) return;
 

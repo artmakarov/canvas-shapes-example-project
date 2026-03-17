@@ -5,7 +5,6 @@
 ## Структура
 
 ### abstractions/
-- `base-app-ui-manager.abstraction.js` - Абстрактный класс UI менеджера приложения
 - `base-button-ui-manager.abstraction.js` - Абстрактный класс UI менеджера кнопок
 - `base-figure.abstraction.js` - Абстрактный класс базовой фигуры на холсте
 - `base-shape-manager.abstraction.js` - Абстрактный класс менеджера геометрических фигур
